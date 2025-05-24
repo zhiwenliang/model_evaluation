@@ -1,0 +1,182 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.5 Chrome/134.0.6998.205 Electron/35.3.0 Safari/537.36" version="27.0.5" pages="4">
+  <diagram name="算子模块设计" id="GtTXIswkfge0DuPpP-Sk">
+    <mxGraphModel dx="3443" dy="3201" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="K1KVENx62Ao4L50V2tFQ-20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="K1KVENx62Ao4L50V2tFQ-18" target="K1KVENx62Ao4L50V2tFQ-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="K1KVENx62Ao4L50V2tFQ-18" value="&lt;a href=&quot;data:page/id,E4L1kjLXb85TXoBJHbN7&quot;&gt;入参&lt;/a&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=top;fontStyle=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="60" y="340" width="410" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="K1KVENx62Ao4L50V2tFQ-26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="K1KVENx62Ao4L50V2tFQ-19" target="K1KVENx62Ao4L50V2tFQ-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="K1KVENx62Ao4L50V2tFQ-19" value="数据集和模型预处理" style="rounded=1;whiteSpace=wrap;html=1;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=top;fontStyle=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="550" y="340" width="410" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="K1KVENx62Ao4L50V2tFQ-21" value="数据集适配&lt;div&gt;1. 是否使用客观预置数据集&lt;/div&gt;&lt;div&gt;2.&amp;nbsp;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;" vertex="1" parent="1">
+          <mxGeometry x="770" y="520" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="K1KVENx62Ao4L50V2tFQ-22" value="数据集相关参数" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="115" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="K1KVENx62Ao4L50V2tFQ-23" value="模型相关参数" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="293" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="K1KVENx62Ao4L50V2tFQ-24" value="模型适配&lt;div&gt;1. 挂载模型是否为LoRA小包&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;" vertex="1" parent="1">
+          <mxGeometry x="770" y="430" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="KXUflMlprBXGqf2pee5X-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="K1KVENx62Ao4L50V2tFQ-18" target="KXUflMlprBXGqf2pee5X-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KXUflMlprBXGqf2pee5X-22" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="K1KVENx62Ao4L50V2tFQ-25" target="KXUflMlprBXGqf2pee5X-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="K1KVENx62Ao4L50V2tFQ-25" value="配置组装" style="rounded=1;whiteSpace=wrap;html=1;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=top;fontStyle=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="340" width="410" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="K1KVENx62Ao4L50V2tFQ-27" value="模型配置" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="K1KVENx62Ao4L50V2tFQ-28" value="数据集配置" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="N8MecqAQ4ALwTFfbYUMx-7" value="其他参数" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="115" y="510" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vDfOXCqDWc_-ufS0sy2z-1" value="推理相关配置" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="525" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vDfOXCqDWc_-ufS0sy2z-2" value="评估相关配置" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="525" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="5z0nET6vhMPwMQEoY5Xo-1" value="参数校验&lt;div&gt;1. 校验评测指标和数据集是否适配&lt;/div&gt;&lt;div&gt;2. 自定义数据集检查是否符合标准格式&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="590" y="430" width="120" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="KXUflMlprBXGqf2pee5X-4" value="启动推理服务" style="rounded=1;whiteSpace=wrap;html=1;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=top;fontStyle=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="1530" y="-160" width="410" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="KXUflMlprBXGqf2pee5X-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KXUflMlprBXGqf2pee5X-16" target="KXUflMlprBXGqf2pee5X-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KXUflMlprBXGqf2pee5X-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KXUflMlprBXGqf2pee5X-16" target="KXUflMlprBXGqf2pee5X-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KXUflMlprBXGqf2pee5X-16" value="推理" style="rounded=1;whiteSpace=wrap;html=1;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=top;fontStyle=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="2020" y="340" width="410" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="KXUflMlprBXGqf2pee5X-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KXUflMlprBXGqf2pee5X-18" target="KXUflMlprBXGqf2pee5X-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KXUflMlprBXGqf2pee5X-18" value="评估" style="rounded=1;whiteSpace=wrap;html=1;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=top;fontStyle=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="2510" y="340" width="410" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="KXUflMlprBXGqf2pee5X-19" value="推理结果后处理" style="rounded=1;whiteSpace=wrap;html=1;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=top;fontStyle=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="2020" y="750" width="410" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="KXUflMlprBXGqf2pee5X-20" value="评估结果后处理" style="rounded=1;whiteSpace=wrap;html=1;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=top;fontStyle=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="2510" y="750" width="410" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="KXUflMlprBXGqf2pee5X-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KXUflMlprBXGqf2pee5X-21" target="KXUflMlprBXGqf2pee5X-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mzrw-HTgVW34QrSPTG0A-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="KXUflMlprBXGqf2pee5X-21" target="KXUflMlprBXGqf2pee5X-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1735" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KXUflMlprBXGqf2pee5X-21" value="Open Compass 配置模型加载" style="rounded=1;whiteSpace=wrap;html=1;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=top;fontStyle=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="1530" y="340" width="410" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="XldAZwqgogPdIn37bDZW-1" value="普通推理" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2065" y="400" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XldAZwqgogPdIn37bDZW-2" value="裁判模式推理" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="2235" y="400" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XldAZwqgogPdIn37bDZW-3" value="参考不同模型推理镜像，启动本地推理服务" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="-110" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XldAZwqgogPdIn37bDZW-6" value="普通推理结果处理" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2065" y="820" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XldAZwqgogPdIn37bDZW-7" value="裁判模式推理结果处理" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="2235" y="820" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="mzrw-HTgVW34QrSPTG0A-1" value="API模式" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1580" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="mzrw-HTgVW34QrSPTG0A-2" value="vllm加载模型" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1750" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="E4L1kjLXb85TXoBJHbN7" name="入参">
+    <mxGraphModel dx="2175" dy="1283" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="38Org30Iop9ytJJ_aAH5-2" value="数据集相关参数" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="720" height="340" as="geometry">
+            <mxRectangle x="120" y="150" width="140" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xwTdUyV7RWqF_U8dc8yI-5" value="&lt;b&gt;通用参数&lt;/b&gt;&lt;div&gt;1. DATASET_TYPE: 数据集类型，支持用户自定义数据集和内置数据集&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;- BUILT_IN：内置数据集&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- CUSTOM：用户自定义数据集&lt;/div&gt;&lt;div&gt;2. EVALUATION_METRICS: 评估指标，多个指标使用 &quot;,&quot; 分隔开，不传时使用通用的默认指标进行评估&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- 通用指标：ROUGE-1, ROUGE-2, ROUGE-L, BLEU-4&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- 其他指标&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;" vertex="1" parent="38Org30Iop9ytJJ_aAH5-2">
+          <mxGeometry x="21" y="40" width="679" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="xwTdUyV7RWqF_U8dc8yI-6" value="&lt;b&gt;用户自定义数据集&lt;/b&gt;&lt;div&gt;1. CUSTOM_DATASET_PATH: 自定义数据集路径&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- 支持文件夹和jsonl文件，多个路径使用 &quot;,&quot; 分隔&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- 文件夹内需包含数据集对应的jsonl文件&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- jsonl文件内容请使用平台数据集标准格式&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="38Org30Iop9ytJJ_aAH5-2">
+          <mxGeometry x="20" y="190" width="330" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="xwTdUyV7RWqF_U8dc8yI-10" value="&lt;b&gt;内置数据集&lt;/b&gt;&lt;div&gt;1. BUILT_IN_DATASET: 内置数据集名称，部分指标和数据集存在特定的 n-n 关系，请注意区分&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;" vertex="1" parent="38Org30Iop9ytJJ_aAH5-2">
+          <mxGeometry x="370" y="190" width="330" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="NC93CiNfIvYoerjGRhLO-1" value="模型相关参数" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="420" width="720" height="480" as="geometry" />
+        </mxCell>
+        <mxCell id="9GSZwmMmW7YQvDfb2fwR-1" value="单个模型配置" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="NC93CiNfIvYoerjGRhLO-1">
+          <mxGeometry x="20" y="90" width="680" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="AZj0HJK31rcUOYE9N9vm-1" value="&lt;b&gt;通用参数&lt;/b&gt;&lt;div&gt;1. MODEL_CONFIG_NAME: 模型配置名称&lt;/div&gt;&lt;div&gt;2. MODEL_TYPE: 模型类型&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- BUILT_IN: 内置模型，根据内置配置决定模型加载和使用方式&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- API: 推理服务API，仅提供API，兼容 OPENAI 规范推理接口&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- CUSTOM: 自定义模型&lt;/div&gt;&lt;div&gt;3. PROMPT: 提示词&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="NC93CiNfIvYoerjGRhLO-1">
+          <mxGeometry x="32.5" y="120" width="655" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="AZj0HJK31rcUOYE9N9vm-5" value="&lt;b&gt;内置模型&lt;/b&gt;&lt;div&gt;1. BUILD_IN_MODEL_NAME: 内置模型名称&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="NC93CiNfIvYoerjGRhLO-1">
+          <mxGeometry x="255" y="280" width="210" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="AZj0HJK31rcUOYE9N9vm-7" value="&lt;b&gt;自定义模型&lt;/b&gt;&lt;div&gt;1. CUSTOM_MODEL_NAME: 自定义模型名称&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;2. BASE_MODEL_PATH: 基础模型路径&lt;/span&gt;&lt;/div&gt;&lt;div&gt;3. LORA_WEIGHT_PATH: LoRA权重路径，有的话就会加载，否则不加载&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="NC93CiNfIvYoerjGRhLO-1">
+          <mxGeometry x="477.5" y="280" width="210" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="AZj0HJK31rcUOYE9N9vm-6" value="&lt;b&gt;推理服务API&lt;/b&gt;&lt;div&gt;1. API_URL: API地址&lt;br&gt;&lt;/div&gt;&lt;div&gt;2. API_KEY: API的key&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="NC93CiNfIvYoerjGRhLO-1">
+          <mxGeometry x="32.5" y="280" width="210" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="9GSZwmMmW7YQvDfb2fwR-8" value="1. MODEL_CONFIGS: 支持传入多模型配置，使用 json 数组字符串形式，数组中 json 对象参考下方单个模型配置设置" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="NC93CiNfIvYoerjGRhLO-1">
+          <mxGeometry x="25" y="50" width="650" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="AZj0HJK31rcUOYE9N9vm-3" value="其他参数" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="940" width="720" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="AZj0HJK31rcUOYE9N9vm-4" value="&lt;b&gt;通用参数&lt;/b&gt;&lt;div&gt;1. OPERATION_TYPE： 操作类型，批量推理模式（BATCH_INFERENCE），评估模式（EVALUATION），裁判模式（JUDGE）&lt;br&gt;&lt;/div&gt;&lt;div&gt;2. INFERENCE_RESULT: 推理结果路径&lt;/div&gt;&lt;div&gt;3.&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;EVALUATION_RESULT:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;评估结果路径&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="AZj0HJK31rcUOYE9N9vm-3">
+          <mxGeometry x="20" y="40" width="680" height="90" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="YWVlH6LQ0GrDQHL6Lngw" name="Page-3">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="QcebUv2_PUYYRZnECgpF" name="Page-4">
+    <mxGraphModel dx="2066" dy="1219" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
