@@ -1,0 +1,34 @@
+05/27 16:31:09 - OpenCompass - INFO - Task [qwen-plus-2025-04-28/gsm8k_0,qwen-plus-2025-04-28/gsm8k_1]
+05/27 16:31:11 - OpenCompass - INFO - Start inferencing [qwen-plus-2025-04-28/gsm8k_0]
+05/27 16:31:11 - OpenCompass - WARNING - 'Could not automatically map qwen-plus-2025-04-28 to a tokeniser. Please use `tiktoken.get_encoding` to explicitly get the tokeniser you expect.', tiktoken encoding cannot load qwen-plus-2025-04-28
+05/27 16:31:31 - OpenCompass - WARNING - Can not get tokenizer automatically, will use default tokenizer gpt-4 for length calculation.
+[2025-05-27 16:34:31,786] [opencompass.openicl.icl_inferencer.icl_gen_inferencer] [INFO] Starting build dataloader
+[2025-05-27 16:34:31,789] [opencompass.openicl.icl_inferencer.icl_gen_inferencer] [INFO] Starting inference process...
+  0%|          | 0/2 [00:00<?, ?it/s]
+Inferencing:   0%|          | 0/8 [00:00<?, ?it/s][A
+Inferencing:  12%|█▎        | 1/8 [00:49<05:45, 49.42s/it][A
+Inferencing:  25%|██▌       | 2/8 [00:50<02:04, 20.76s/it][A
+Inferencing:  38%|███▊      | 3/8 [00:52<01:01, 12.31s/it][A
+Inferencing:  50%|█████     | 4/8 [00:52<00:30,  7.55s/it][A
+Inferencing:  88%|████████▊ | 7/8 [00:54<00:03,  3.30s/it][A
+Inferencing: 100%|██████████| 8/8 [00:55<00:00,  2.70s/it][AInferencing: 100%|██████████| 8/8 [00:55<00:00,  6.96s/it]
+ 50%|█████     | 1/2 [00:55<00:55, 55.68s/it]
+Inferencing:   0%|          | 0/2 [00:00<?, ?it/s][A
+Inferencing:  50%|█████     | 1/2 [00:57<00:57, 57.57s/it][AInferencing: 100%|██████████| 2/2 [00:57<00:00, 28.78s/it]
+100%|██████████| 2/2 [01:53<00:00, 56.79s/it]100%|██████████| 2/2 [01:53<00:00, 56.63s/it]
+Traceback (most recent call last):
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/opencompass/tasks/openicl_infer.py", line 161, in <module>
+    inferencer.run()
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/opencompass/tasks/openicl_infer.py", line 79, in run
+    self.dataset = build_dataset_from_cfg(self.dataset_cfg)
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/opencompass/utils/build.py", line 12, in build_dataset_from_cfg
+    return LOAD_DATASET.build(dataset_cfg)
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/mmengine/registry/registry.py", line 570, in build
+    return self.build_func(cfg, *args, **kwargs, registry=self)
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/mmengine/registry/build_functions.py", line 121, in build_from_cfg
+    obj = obj_cls(**args)  # type: ignore
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/opencompass/datasets/base.py", line 17, in __init__
+    dataset = self.load(**kwargs)
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/opencompass/datasets/custom.py", line 173, in load
+    with open(path, 'r', encoding='utf-8-sig') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/humuh/source/my/model_evaluation/datasets/gsm8k_1.jsonl'

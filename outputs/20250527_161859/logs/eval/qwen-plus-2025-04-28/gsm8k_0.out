@@ -1,0 +1,2 @@
+05/27 16:36:44 - OpenCompass - INFO - Task [qwen-plus-2025-04-28/gsm8k_0]: {'rouge1': 0.4395924718055457, 'rouge2': 0.15325045722311448, 'rougeL': 0.28732196923331055, 'rougeLsum': 0.40406361103129573}
+05/27 16:36:44 - OpenCompass - INFO - time elapsed: 2.28s

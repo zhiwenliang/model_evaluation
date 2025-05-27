@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/opencompass/tasks/openicl_eval.py", line 481, in <module>
+    inferencer.run()
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/opencompass/tasks/openicl_eval.py", line 86, in run
+    self._score()
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/opencompass/tasks/openicl_eval.py", line 89, in _score
+    test_set = build_dataset_from_cfg(self.dataset_cfg).test
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/opencompass/utils/build.py", line 12, in build_dataset_from_cfg
+    return LOAD_DATASET.build(dataset_cfg)
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/mmengine/registry/registry.py", line 570, in build
+    return self.build_func(cfg, *args, **kwargs, registry=self)
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/mmengine/registry/build_functions.py", line 121, in build_from_cfg
+    obj = obj_cls(**args)  # type: ignore
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/opencompass/datasets/base.py", line 17, in __init__
+    dataset = self.load(**kwargs)
+  File "/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/site-packages/opencompass/datasets/custom.py", line 173, in load
+    with open(path, 'r', encoding='utf-8-sig') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/humuh/source/my/model_evaluation/datasets/gsm8k_1.jsonl'
