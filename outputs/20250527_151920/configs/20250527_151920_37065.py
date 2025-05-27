@@ -1,0 +1,180 @@
+api_meta_template=dict(
+    round=[
+        dict(api_role='HUMAN',
+            role='HUMAN'),
+        dict(api_role='BOT',
+            generate=True,
+            role='BOT'),
+        ])
+custom_datasets=[
+    dict(abbr='gsm8k_0',
+        eval_cfg=dict(
+            evaluator=dict(
+                metric='rouge',
+                type='opencompass.openicl.icl_evaluator.HuggingfaceEvaluator')),
+        infer_cfg=dict(
+            inferencer=dict(
+                type='opencompass.openicl.icl_inferencer.GenInferencer'),
+            prompt_template=dict(
+                template=dict(
+                    round=[
+                        dict(prompt='{input}\nPlease reason step by step, and put your final answer within \\boxed{}.',
+                            role='HUMAN'),
+                        ]),
+                type='opencompass.openicl.icl_prompt_template.PromptTemplate'),
+            retriever=dict(
+                type='opencompass.openicl.icl_retriever.ZeroRetriever')),
+        local_mode=True,
+        path='/Users/humuh/source/my/model_evaluation/datasets/gsm8k_0.jsonl',
+        reader_cfg=dict(
+            input_columns=[
+                'input',
+                ],
+            output_column='target'),
+        type='opencompass.datasets.custom.CustomDataset'),
+    dict(abbr='gsm8k_1',
+        eval_cfg=dict(
+            evaluator=dict(
+                metric='rouge',
+                type='opencompass.openicl.icl_evaluator.HuggingfaceEvaluator')),
+        infer_cfg=dict(
+            inferencer=dict(
+                type='opencompass.openicl.icl_inferencer.GenInferencer'),
+            prompt_template=dict(
+                template=dict(
+                    round=[
+                        dict(prompt='{input}\nPlease reason step by step, and put your final answer within \\boxed{}.',
+                            role='HUMAN'),
+                        ]),
+                type='opencompass.openicl.icl_prompt_template.PromptTemplate'),
+            retriever=dict(
+                type='opencompass.openicl.icl_retriever.ZeroRetriever')),
+        local_mode=True,
+        path='/Users/humuh/source/my/model_evaluation/datasets/gsm8k_1.jsonl',
+        reader_cfg=dict(
+            input_columns=[
+                'input',
+                ],
+            output_column='target'),
+        type='opencompass.datasets.custom.CustomDataset'),
+    ]
+custom_eval_cfg=dict(
+    evaluator=dict(
+        metric='rouge',
+        type='opencompass.openicl.icl_evaluator.HuggingfaceEvaluator'))
+custom_infer_cfg=dict(
+    inferencer=dict(
+        type='opencompass.openicl.icl_inferencer.GenInferencer'),
+    prompt_template=dict(
+        template=dict(
+            round=[
+                dict(prompt='{input}\nPlease reason step by step, and put your final answer within \\boxed{}.',
+                    role='HUMAN'),
+                ]),
+        type='opencompass.openicl.icl_prompt_template.PromptTemplate'),
+    retriever=dict(
+        type='opencompass.openicl.icl_retriever.ZeroRetriever'))
+custom_reader_cfg=dict(
+    input_columns=[
+        'input',
+        ],
+    output_column='target')
+dataset_type=''
+datasets=[
+    dict(abbr='gsm8k_0',
+        eval_cfg=dict(
+            evaluator=dict(
+                metric='rouge',
+                type='opencompass.openicl.icl_evaluator.HuggingfaceEvaluator')),
+        infer_cfg=dict(
+            inferencer=dict(
+                type='opencompass.openicl.icl_inferencer.GenInferencer'),
+            prompt_template=dict(
+                template=dict(
+                    round=[
+                        dict(prompt='{input}\nPlease reason step by step, and put your final answer within \\boxed{}.',
+                            role='HUMAN'),
+                        ]),
+                type='opencompass.openicl.icl_prompt_template.PromptTemplate'),
+            retriever=dict(
+                type='opencompass.openicl.icl_retriever.ZeroRetriever')),
+        local_mode=True,
+        path='/Users/humuh/source/my/model_evaluation/datasets/gsm8k_0.jsonl',
+        reader_cfg=dict(
+            input_columns=[
+                'input',
+                ],
+            output_column='target'),
+        type='opencompass.datasets.custom.CustomDataset'),
+    dict(abbr='gsm8k_1',
+        eval_cfg=dict(
+            evaluator=dict(
+                metric='rouge',
+                type='opencompass.openicl.icl_evaluator.HuggingfaceEvaluator')),
+        infer_cfg=dict(
+            inferencer=dict(
+                type='opencompass.openicl.icl_inferencer.GenInferencer'),
+            prompt_template=dict(
+                template=dict(
+                    round=[
+                        dict(prompt='{input}\nPlease reason step by step, and put your final answer within \\boxed{}.',
+                            role='HUMAN'),
+                        ]),
+                type='opencompass.openicl.icl_prompt_template.PromptTemplate'),
+            retriever=dict(
+                type='opencompass.openicl.icl_retriever.ZeroRetriever')),
+        local_mode=True,
+        path='/Users/humuh/source/my/model_evaluation/datasets/gsm8k_1.jsonl',
+        reader_cfg=dict(
+            input_columns=[
+                'input',
+                ],
+            output_column='target'),
+        type='opencompass.datasets.custom.CustomDataset'),
+    ]
+evaluation_metric_list=[
+    '',
+    ]
+evaluation_metrics=''
+models=[
+    dict(abbr='qwen-plus-2025-01-25',
+        batch_size=8,
+        key='sk-8c019c61a5524a4fa6222ff0e9de9130',
+        max_out_len=2048,
+        max_seq_len=4096,
+        meta_template=dict(
+            round=[
+                dict(api_role='HUMAN',
+                    role='HUMAN'),
+                dict(api_role='BOT',
+                    generate=True,
+                    role='BOT'),
+                ]),
+        openai_api_base=[
+            'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
+            ],
+        path='qwen-plus-2025-01-25',
+        query_per_second=1,
+        type='opencompass.models.OpenAI'),
+    dict(abbr='qwen-plus-2025-04-28',
+        batch_size=8,
+        key='sk-8c019c61a5524a4fa6222ff0e9de9130',
+        max_out_len=2048,
+        max_seq_len=4096,
+        meta_template=dict(
+            round=[
+                dict(api_role='HUMAN',
+                    role='HUMAN'),
+                dict(api_role='BOT',
+                    generate=True,
+                    role='BOT'),
+                ]),
+        openai_api_base=[
+            'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
+            ],
+        path='qwen-plus-2025-04-28',
+        query_per_second=1,
+        type='opencompass.models.OpenAI'),
+    ]
+os=<module 'os' from '/opt/homebrew/anaconda3/envs/opencompass/lib/python3.10/os.py'>
+work_dir='outputs/20250527_151920'

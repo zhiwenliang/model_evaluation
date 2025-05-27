@@ -1,0 +1,1 @@
+pip install -U -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple -r requirements.txt

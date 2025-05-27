@@ -1,0 +1,25 @@
+05/27 16:19:03 - OpenCompass - INFO - Task [qwen-plus-2025-01-25/gsm8k_0,qwen-plus-2025-01-25/gsm8k_1]
+05/27 16:19:05 - OpenCompass - INFO - Start inferencing [qwen-plus-2025-01-25/gsm8k_0]
+05/27 16:19:05 - OpenCompass - WARNING - 'Could not automatically map qwen-plus-2025-01-25 to a tokeniser. Please use `tiktoken.get_encoding` to explicitly get the tokeniser you expect.', tiktoken encoding cannot load qwen-plus-2025-01-25
+05/27 16:19:25 - OpenCompass - WARNING - Can not get tokenizer automatically, will use default tokenizer gpt-4 for length calculation.
+[2025-05-27 16:22:26,061] [opencompass.openicl.icl_inferencer.icl_gen_inferencer] [INFO] Starting build dataloader
+[2025-05-27 16:22:26,063] [opencompass.openicl.icl_inferencer.icl_gen_inferencer] [INFO] Starting inference process...
+  0%|          | 0/2 [00:00<?, ?it/s]
+Inferencing:   0%|          | 0/8 [00:00<?, ?it/s][A
+Inferencing:  12%|█▎        | 1/8 [01:05<07:37, 65.39s/it][A
+Inferencing:  38%|███▊      | 3/8 [01:13<01:40, 20.13s/it][A
+Inferencing:  50%|█████     | 4/8 [01:14<00:53, 13.42s/it][AInferencing: 100%|██████████| 8/8 [01:14<00:00,  9.34s/it]
+ 50%|█████     | 1/2 [01:14<01:14, 74.73s/it]
+Inferencing:   0%|          | 0/2 [00:00<?, ?it/s][A
+Inferencing:  50%|█████     | 1/2 [01:19<01:19, 79.89s/it][AInferencing: 100%|██████████| 2/2 [01:19<00:00, 39.95s/it]
+100%|██████████| 2/2 [02:34<00:00, 77.77s/it]100%|██████████| 2/2 [02:34<00:00, 77.31s/it]
+05/27 16:25:00 - OpenCompass - INFO - Start inferencing [qwen-plus-2025-01-25/gsm8k_1]
+[2025-05-27 16:28:20,861] [opencompass.openicl.icl_inferencer.icl_gen_inferencer] [INFO] Starting build dataloader
+[2025-05-27 16:28:20,862] [opencompass.openicl.icl_inferencer.icl_gen_inferencer] [INFO] Starting inference process...
+  0%|          | 0/2 [00:00<?, ?it/s]
+Inferencing:   0%|          | 0/8 [00:00<?, ?it/s][A
+Inferencing:  12%|█▎        | 1/8 [00:58<06:51, 58.77s/it][A
+Inferencing:  38%|███▊      | 3/8 [01:05<01:29, 17.81s/it][A
+Inferencing: 100%|██████████| 8/8 [01:13<00:00,  6.05s/it][AInferencing: 100%|██████████| 8/8 [01:13<00:00,  9.22s/it]
+ 50%|█████     | 1/2 [01:13<01:13, 73.74s/it]
+Inferencing:   0%|          | 0/2 [00:00<?, ?it/s][A
