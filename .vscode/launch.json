@@ -11,7 +11,7 @@
             "request": "launch",
             "program": "run.py",
             "console": "integratedTerminal",
-            "args": "config.py -w outputs",
+            "args": "config_demo.py -w outputs --debug",
             "justMyCode": false
         }
     ]

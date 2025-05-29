@@ -1,29 +1,0 @@
-05/27 15:20:39 - OpenCompass - INFO - Task [qwen-plus-2025-01-25/gsm8k_0,qwen-plus-2025-01-25/gsm8k_1]
-05/27 15:20:42 - OpenCompass - INFO - Start inferencing [qwen-plus-2025-01-25/gsm8k_0]
-05/27 15:20:42 - OpenCompass - WARNING - 'Could not automatically map qwen-plus-2025-01-25 to a tokeniser. Please use `tiktoken.get_encoding` to explicitly get the tokeniser you expect.', tiktoken encoding cannot load qwen-plus-2025-01-25
-05/27 15:21:02 - OpenCompass - WARNING - Can not get tokenizer automatically, will use default tokenizer gpt-4 for length calculation.
-[2025-05-27 15:24:02,409] [opencompass.openicl.icl_inferencer.icl_gen_inferencer] [INFO] Starting build dataloader
-[2025-05-27 15:24:02,411] [opencompass.openicl.icl_inferencer.icl_gen_inferencer] [INFO] Starting inference process...
-  0%|          | 0/2 [00:00<?, ?it/s]
-Inferencing:   0%|          | 0/8 [00:00<?, ?it/s][A
-Inferencing:  12%|█▎        | 1/8 [00:59<06:59, 59.91s/it][A
-Inferencing:  38%|███▊      | 3/8 [01:05<01:27, 17.47s/it][A
-Inferencing:  62%|██████▎   | 5/8 [01:11<00:30, 10.10s/it][A
-Inferencing: 100%|██████████| 8/8 [01:15<00:00,  5.47s/it][AInferencing: 100%|██████████| 8/8 [01:15<00:00,  9.40s/it]
- 50%|█████     | 1/2 [01:15<01:15, 75.25s/it]
-Inferencing:   0%|          | 0/2 [00:00<?, ?it/s][A
-Inferencing:  50%|█████     | 1/2 [01:15<01:15, 75.05s/it][AInferencing: 100%|██████████| 2/2 [01:15<00:00, 37.53s/it]
-100%|██████████| 2/2 [02:30<00:00, 75.14s/it]100%|██████████| 2/2 [02:30<00:00, 75.15s/it]
-05/27 15:26:32 - OpenCompass - INFO - Start inferencing [qwen-plus-2025-01-25/gsm8k_1]
-[2025-05-27 15:29:52,896] [opencompass.openicl.icl_inferencer.icl_gen_inferencer] [INFO] Starting build dataloader
-[2025-05-27 15:29:52,898] [opencompass.openicl.icl_inferencer.icl_gen_inferencer] [INFO] Starting inference process...
-  0%|          | 0/2 [00:00<?, ?it/s]
-Inferencing:   0%|          | 0/8 [00:00<?, ?it/s][A
-Inferencing:  12%|█▎        | 1/8 [01:01<07:12, 61.72s/it][A
-Inferencing:  38%|███▊      | 3/8 [01:07<01:30, 18.12s/it][A
-Inferencing: 100%|██████████| 8/8 [01:12<00:00,  5.74s/it][AInferencing: 100%|██████████| 8/8 [01:12<00:00,  9.09s/it]
- 50%|█████     | 1/2 [01:12<01:12, 72.74s/it]
-Inferencing:   0%|          | 0/2 [00:00<?, ?it/s][A
-Inferencing:  50%|█████     | 1/2 [01:10<01:10, 70.01s/it][AInferencing: 100%|██████████| 2/2 [01:10<00:00, 35.01s/it]
-100%|██████████| 2/2 [02:22<00:00, 71.14s/it]100%|██████████| 2/2 [02:22<00:00, 71.38s/it]
-05/27 15:32:15 - OpenCompass - INFO - time elapsed: 695.91s
