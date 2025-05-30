@@ -38,11 +38,11 @@ A tool to evaluate LLM base on open compass project.
 ```json
 [
   {
-    "DATASET_CONFIG_ID": "gsm8k_0",
+    "DATASET_CONFIG_ID": "test_dataset",
     "DATASET_TYPE": "CUSTOM",
     "EVALUATION_METRICS": "BLEU-4,rouge1,rouge2,rougeL,rougeLsum",
     "BUILT_IN_DATASET": "",
-    "CUSTOM_DATASET_PATH": "/tmp/dataset/gsm8k_0.jsonl"
+    "CUSTOM_DATASET_PATH": "/iflytek/dataset/gsm8k_0.jsonl"
   }
 ]
 ```
@@ -55,7 +55,7 @@ A tool to evaluate LLM base on open compass project.
 	- CUSTOM: 自定义模型
 3. PROMPT: 提示词
 4. TEMPERATURE: 控制采样温度（0 表示贪婪解码），默认0
-5. TOP_K: 每一步只从 top_k 个 token 中采样，默认0
+5. TOP_K: 每一步只从 top_k 个 token 中采样，默认-1(disable)
 6. PRESENCE_PENALTY: 对已经出现过的 token 增加/减少其再次出现的概率，默认0
 
 #### API
@@ -81,7 +81,7 @@ A tool to evaluate LLM base on open compass project.
 ```json
 [
   {
-    "MODEL_CONFIG_ID": "test",
+    "MODEL_CONFIG_ID": "test_model",
     "MODEL_TYPE": "API",
     "PROMPT": "",
     "TEMPERATURE": "",

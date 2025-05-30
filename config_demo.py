@@ -50,7 +50,7 @@ custom_datasets = [
     dict(
         abbr="gsm8k_0",
         type=CustomDataset,
-        path="/datasets/gsm8k_0.jsonl",
+        path="/iflytek/evaluation/datasets/gsm8k_0.jsonl",
         reader_cfg=custom_reader_cfg,
         infer_cfg=custom_infer_cfg,
         eval_cfg=custom_eval_cfg,
@@ -67,7 +67,7 @@ custom_datasets = [
     # ),
 ]
 
-base_model_path = ""
+base_model_path = "/iflytek/base_model"
 lora_weight_path = ""
 temperature = 0
 top_k = 0
@@ -88,16 +88,16 @@ models += [
         max_out_len=2048,
         batch_size=8,
     ),
-    # dict(
-    #     type=VLLM,
-    #     abbr="qwen2.5-7b-instruct-vllm",
-    #     path=base_model_path,
-    #     lora_path=lora_weight_path,
-    #     model_kwargs=dict(tensor_parallel_size=1),
-    #     batch_size=16,
-    #     generation_kwargs=dict(
-    #         temperature=temperature, top_k=top_k, presence_penalty=presence_penalty
-    #     ),
-    #     run_cfg=dict(num_gpus=1),
-    # ),
+    dict(
+        type=VLLM,
+        abbr="qwen2.5-7b-instruct-vllm",
+        path=base_model_path,
+        lora_path=lora_weight_path,
+        model_kwargs=dict(tensor_parallel_size=1),
+        batch_size=16,
+        generation_kwargs=dict(
+            temperature=temperature, top_k=top_k, presence_penalty=presence_penalty
+        ),
+        run_cfg=dict(num_gpus=1),
+    ),
 ]

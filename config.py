@@ -1,4 +1,3 @@
-from mmengine.config import read_base
 from opencompass.openicl.icl_evaluator import HuggingfaceEvaluator
 from model_evaluation.evaluator.custom_evaluator import CustomEvaluator
 from opencompass.openicl.icl_prompt_template import PromptTemplate
@@ -28,10 +27,6 @@ custom_infer_cfg = dict(
     ),
     retriever=dict(type=ZeroRetriever),
     inferencer=dict(type=GenInferencer),
-)
-
-custom_eval_cfg = dict(
-    evaluator=dict(type=HuggingfaceEvaluator, metric="rouge"),
 )
 
 api_meta_template = dict(
@@ -99,14 +94,14 @@ if model_configs != "":
             prompt = model_config["PROMPT"]
             temperature = (
                 model_config["TEMPERATURE"]
-                if model_config["TEMPERATURE"] is not None
+                if model_config["TEMPERATURE"]
                 else 0
             )
-            top_k = model_config["TOP_K"] if model_config["TOP_K"] is not None else 0
+            top_k = model_config["TOP_K"] if model_config["TOP_K"] else 0
             presence_penalty = (
                 model_config["PRESENCE_PENALTY"]
-                if model_config["PRESENCE_PENALTY"] is not None
-                else 0
+                if model_config["PRESENCE_PENALTY"]
+                else -1
             )
             if model_type == "API":
                 # OpenAI,Spark, DeepSeek
@@ -169,7 +164,7 @@ if model_configs != "":
                 models += [
                     dict(
                         type=VLLM,
-                        abbr="qwen2.5-7b-instruct-vllm",
+                        abbr=model_config_id,
                         path=base_model_path,
                         lora_path=lora_weight_path,
                         model_kwargs=dict(tensor_parallel_size=1),
