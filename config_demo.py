@@ -14,14 +14,7 @@ custom_reader_cfg = dict(input_columns=["input"], output_column="target")
 custom_infer_cfg = dict(
     prompt_template=dict(
         type=PromptTemplate,
-        template=dict(
-            round=[
-                dict(
-                    role="HUMAN",
-                    prompt="{input}\nPlease reason step by step, and put your final answer within \\boxed{}.",
-                ),
-            ],
-        ),
+        template="{input}",
     ),
     retriever=dict(type=ZeroRetriever),
     inferencer=dict(type=GenInferencer),
@@ -50,7 +43,7 @@ custom_datasets = [
     dict(
         abbr="gsm8k_0",
         type=CustomDataset,
-        path="/iflytek/evaluation/datasets/gsm8k_0.jsonl",
+        path="/Users/humuh/source/my/model_evaluation/datasets/gsm8k_0.jsonl",
         reader_cfg=custom_reader_cfg,
         infer_cfg=custom_infer_cfg,
         eval_cfg=custom_eval_cfg,
@@ -88,16 +81,16 @@ models += [
         max_out_len=2048,
         batch_size=8,
     ),
-    dict(
-        type=VLLM,
-        abbr="qwen2.5-7b-instruct-vllm",
-        path=base_model_path,
-        lora_path=lora_weight_path,
-        model_kwargs=dict(tensor_parallel_size=1),
-        batch_size=16,
-        generation_kwargs=dict(
-            temperature=temperature, top_k=top_k, presence_penalty=presence_penalty
-        ),
-        run_cfg=dict(num_gpus=1),
-    ),
+    # dict(
+    #     type=VLLM,
+    #     abbr="qwen2.5-7b-instruct-vllm",
+    #     path=base_model_path,
+    #     lora_path=lora_weight_path,
+    #     model_kwargs=dict(tensor_parallel_size=1),
+    #     batch_size=16,
+    #     generation_kwargs=dict(
+    #         temperature=temperature, top_k=top_k, presence_penalty=presence_penalty
+    #     ),
+    #     run_cfg=dict(num_gpus=1),
+    # ),
 ]

@@ -2,20 +2,31 @@
 echo "OPERATION_TYPE: ${OPERATION_TYPE}"
 echo "INFERENCE_RESULT: ${INFERENCE_RESULT}"
 echo "EVALUATION_RESULT:  ${EVALUATION_RESULT}"
+echo "MODEL_CONFIGS:  ${MODEL_CONFIGS}"
+echo "DATASET_CONFIGS:  ${DATASET_CONFIGS}"
 
-# 处理
+export TMP_OUTPUT="/Users/humuh/Downloads/tmp/output1"
+echo "tmp_output: ${TMP_OUTPUT}"
+
+
+# handle custom dataset
+handle_custom_dataset_result=$(python handle_custom_dataset.py)
+export MERGED_DATASET_PATH_DICT=$handle_custom_dataset_result
+echo "MERGED_DATASET_PATH_DICT: ${MERGED_DATASET_PATH_DICT}"
+
+# run operation
 case ${OPERATION_TYPE} in
     "INFERENCE")
-        echo "BATCH_INFERENCE"
-        python run.py config.py -m infer -w /tmp/outputs --debug
+        echo "OPERATION_TYPE is: BATCH_INFERENCE"
+        python run.py config.py -m infer -w $TMP_OUTPUT --debug
         ;;
     "EVALUATION")
-        echo "EVALUATION"
-        python run.py config.py -m all -w /tmp/outputs --debug
+        echo "OPERATION_TYPE is: EVALUATION"
+        python run.py config.py -m all -w $TMP_OUTPUT --debug
         ;;
     "JUDGE")
-        echo "JUDGE"
-        python run.py config.py -m infer -w /tmp/outputs --debug
+        echo "OPERATION_TYPE is: JUDGE"
+        python run.py config.py -m infer -w $TMP_OUTPUT --debug
         ;;
     *)
         echo "OPERATION_TYPE: ${OPERATION_TYPE} is not supported"
@@ -23,8 +34,8 @@ case ${OPERATION_TYPE} in
         ;;
 esac
 
+# get inference result and evaluation result from tmp_output, save to INFERENCE_RESULT and EVALUATION_RESULT
+python gen_inference_evaluation_result.py
 
-# 处理并copy推理结果到指定目录
+# run further operation for judge mode
 
-
-# 处理并copy评估结果到指定目录zh

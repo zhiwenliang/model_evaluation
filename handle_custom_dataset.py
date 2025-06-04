@@ -1,24 +1,12 @@
-import os 
+import os
 import json
 
-def parse_json(json_str):
-    try:
-        json_obj = json.loads(json_str)
-        return json_obj
-    except json.JSONDecodeError as e:
-        print(f"Error parsing JSON: {e}")
-        return None
-    
-# Merge all jsonl files into one jsonl file, return new jsonl file path
-def handle_custom_dataset(custom_dataset_path, dataset_config_id):
-    print("handle custom_dataset_path")
-    # check custom_dataset_path is not empty
-    if not custom_dataset_path:
-        raise ValueError("custom_dataset_path is empty")
-    
+
+def handle_custom_dataset(dataset_config_id, custom_dataset_path):
     # split dataset_path by comma for next step
     dataset_path_list = custom_dataset_path.split(",")
-    merged_dataset_path = f"/tmp/merged_dataset_{dataset_config_id}.jsonl"
+    os.makedirs
+    merged_dataset_path = f"/Users/humuh/Downloads/merged_dataset_{dataset_config_id}.jsonl"
     with open(merged_dataset_path, "a") as merged_file:
         for dataset_path in dataset_path_list:
             # check if dataset_path is a directory, if yes, loop through all jsonl files in the directory
@@ -33,5 +21,16 @@ def handle_custom_dataset(custom_dataset_path, dataset_config_id):
                     with open(dataset_path, "r") as f:
                         # write all content to merged_file
                         merged_file.write(f.read())
-    print("handle custom_dataset_path done, result: ", merged_dataset_path)
     return merged_dataset_path
+
+
+dataset_configs = os.getenv("DATASET_CONFIGS")
+result = dict()
+if dataset_configs:
+    dataset_configs_list = json.loads(dataset_configs)
+    for dataset_config in dataset_configs_list:
+        if dataset_config.get("DATASET_TYPE") == "CUSTOM":
+            dataset_config_id = dataset_config.get("DATASET_CONFIG_ID")
+            custom_dataset_path = dataset_config.get("CUSTOM_DATASET_PATH")
+            result[dataset_config_id] = handle_custom_dataset(dataset_config_id, custom_dataset_path)
+print(json.dumps(result))

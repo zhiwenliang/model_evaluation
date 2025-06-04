@@ -38,9 +38,9 @@ A tool to evaluate LLM base on open compass project.
 ```json
 [
   {
-    "DATASET_CONFIG_ID": "test_dataset",
+    "DATASET_CONFIG_ID": "gsm8k_0",
     "DATASET_TYPE": "CUSTOM",
-    "EVALUATION_METRICS": "BLEU-4,rouge1,rouge2,rougeL,rougeLsum",
+    "EVALUATION_METRICS": "BLEU-4,rouge1,rouge2,rougeL",
     "BUILT_IN_DATASET": "",
     "CUSTOM_DATASET_PATH": "/iflytek/dataset/gsm8k_0.jsonl"
   }
@@ -81,15 +81,16 @@ A tool to evaluate LLM base on open compass project.
 ```json
 [
   {
-    "MODEL_CONFIG_ID": "test_model",
+    "MODEL_CONFIG_ID": "qwen-plus-2025-01-25",
     "MODEL_TYPE": "API",
     "PROMPT": "",
     "TEMPERATURE": "",
     "TOP_K": "",
     "PRESENCE_PENALTY": "",
-    "API_TYPE": "",
-    "API_URL": "",
-    "API_KEY": "",
+    "API_TYPE": "OpenAI",
+    "API_URL": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+    "API_KEY": "sk-8c019c61a5524a4fa6222ff0e9de9130",
+    "API_MODEL": 
   }
 ]
 ```
