@@ -1,5 +1,3 @@
-from opencompass.openicl.icl_evaluator import HuggingfaceEvaluator
-from model_evaluation.evaluator.custom_evaluator import CustomEvaluator
 from opencompass.openicl.icl_prompt_template import PromptTemplate
 from opencompass.openicl.icl_retriever import ZeroRetriever
 from opencompass.openicl.icl_inferencer import GenInferencer
@@ -9,6 +7,7 @@ from os import getenv
 from json import loads as json_loads
 
 from model_evaluation.model.custom_openai import CustomOpenAI
+from model_evaluation.evaluator.custom_evaluator import CustomEvaluator
 
 
 print("----------------------------------")
@@ -63,14 +62,13 @@ if dataset_configs:
                 build_in_dataset = dataset_config.get("BUILT_IN_DATASET")
                 # todo
             elif dataset_type == "CUSTOM":
-                custom_dataset_path = dataset_config.get("CUSTOM_DATASET_PATH")
                 merged_dataset_path_dict = {}
                 if merged_dataset_paths:
                     merged_dataset_path_dict = json_loads(merged_dataset_paths)
                 merged_dataset_path = merged_dataset_path_dict.get(dataset_config_id)
                 # set metrics for evaluator
                 custom_eval_cfg = dict(
-                    evaluator=dict(type=CustomDataset, metrics=evaluation_metric_list),
+                    evaluator=dict(type=CustomEvaluator, metrics=evaluation_metric_list),
                 )
                 print("dataset_config_id: ", dataset_config_id)
                 print("merged_dataset_path: ", merged_dataset_path)
@@ -131,7 +129,7 @@ if model_configs:
                             meta_template=api_meta_template,
                             query_per_second=1,
                             max_out_len=2048,
-                            max_seq_len=4096,
+                            batch_size=8,
                         )
                     ]
                 elif api_type == "Spark":
@@ -146,7 +144,7 @@ if model_configs:
                             meta_template=api_meta_template,
                             query_per_second=1,
                             max_out_len=2048,
-                            max_seq_len=4096,
+                            batch_size=8,
                         )
                     ]
                 elif api_type == "DeepSeek":
@@ -160,6 +158,8 @@ if model_configs:
                             openai_api_base=[api_url],
                             meta_template=api_meta_template,
                             query_per_second=1,
+                            max_out_len=2048,
+                            batch_size=8,
                         )
                     ]
                 else:
@@ -189,3 +189,7 @@ if model_configs:
             elif model_type == "BUILT_IN":
                 # todo
                 models += []
+
+print("datasets: ", datasets)
+print("models: ", models)
+print("----------------------------------")

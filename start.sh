@@ -1,4 +1,6 @@
 #!/bin/bash
+
+set -x
 echo "OPERATION_TYPE: ${OPERATION_TYPE}"
 echo "INFERENCE_RESULT: ${INFERENCE_RESULT}"
 echo "EVALUATION_RESULT:  ${EVALUATION_RESULT}"
@@ -22,7 +24,7 @@ case ${OPERATION_TYPE} in
         ;;
     "EVALUATION")
         echo "OPERATION_TYPE is: EVALUATION"
-        python run.py config.py -m all -w $TMP_OUTPUT --debug
+        python run.py config.py -w $TMP_OUTPUT --debug
         ;;
     "JUDGE")
         echo "OPERATION_TYPE is: JUDGE"
@@ -38,4 +40,3 @@ esac
 python gen_inference_evaluation_result.py
 
 # run further operation for judge mode
-

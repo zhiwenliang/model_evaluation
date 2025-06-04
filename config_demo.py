@@ -1,4 +1,3 @@
-from opencompass.openicl.icl_evaluator import HuggingfaceEvaluator
 from opencompass.openicl.icl_prompt_template import PromptTemplate
 from opencompass.openicl.icl_retriever import ZeroRetriever
 from opencompass.openicl.icl_inferencer import GenInferencer
@@ -43,7 +42,7 @@ custom_datasets = [
     dict(
         abbr="gsm8k_0",
         type=CustomDataset,
-        path="/Users/humuh/source/my/model_evaluation/datasets/gsm8k_0.jsonl",
+        path="/Users/humuh/Downloads/merged_dataset_gsm8k_0.jsonl",
         reader_cfg=custom_reader_cfg,
         infer_cfg=custom_infer_cfg,
         eval_cfg=custom_eval_cfg,
@@ -70,8 +69,8 @@ datasets += custom_datasets
 models += [
     dict(
         type=CustomOpenAI,
-        abbr="qwen-plus-2025-01-25",
-        path="qwen-plus-2025-01-25",
+        abbr="qwen-turbo-latest",
+        path="qwen-turbo-latest",
         key="sk-8c019c61a5524a4fa6222ff0e9de9130",
         openai_api_base=[
             "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
