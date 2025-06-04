@@ -7,7 +7,7 @@ echo "EVALUATION_RESULT:  ${EVALUATION_RESULT}"
 echo "MODEL_CONFIGS:  ${MODEL_CONFIGS}"
 echo "DATASET_CONFIGS:  ${DATASET_CONFIGS}"
 
-export TMP_OUTPUT="/tmp/output1"
+export TMP_OUTPUT="/tmp/output"
 echo "tmp_output: ${TMP_OUTPUT}"
 
 
