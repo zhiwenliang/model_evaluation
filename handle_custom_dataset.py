@@ -5,8 +5,8 @@ import json
 def handle_custom_dataset(dataset_config_id, custom_dataset_path):
     # split dataset_path by comma for next step
     dataset_path_list = custom_dataset_path.split(",")
-    os.makedirs
-    merged_dataset_path = f"/Users/humuh/Downloads/merged_dataset_{dataset_config_id}.jsonl"
+    os.makedirs("/tmp/merged_dataset", exist_ok=True)
+    merged_dataset_path = f"/tmp/merged_dataset/merged_dataset_{dataset_config_id}.jsonl"
     with open(merged_dataset_path, "a") as merged_file:
         for dataset_path in dataset_path_list:
             # check if dataset_path is a directory, if yes, loop through all jsonl files in the directory

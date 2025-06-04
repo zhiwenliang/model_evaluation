@@ -42,7 +42,7 @@ A tool to evaluate LLM base on open compass project.
     "DATASET_TYPE": "CUSTOM",
     "EVALUATION_METRICS": "BLEU-4,rouge1,rouge2,rougeL",
     "BUILT_IN_DATASET": "",
-    "CUSTOM_DATASET_PATH": "/iflytek/dataset/gsm8k_0.jsonl"
+    "CUSTOM_DATASET_PATH": "/your_dataset_dir/gsm8k_0.jsonl"
   }
 ]
 ```
