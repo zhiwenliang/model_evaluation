@@ -58,7 +58,9 @@ if dataset_configs:
             dataset_config_id = dataset_config.get("DATASET_CONFIG_ID")
             dataset_type = dataset_config.get("DATASET_TYPE")
             evaluation_metrics = dataset_config.get("EVALUATION_METRICS")
-            evaluation_metric_list = evaluation_metrics.split(",")
+            evaluation_metric_list = []
+            if evaluation_metrics:
+                evaluation_metric_list = evaluation_metrics.split(",")
             if dataset_type == "BUILT_IN":
                 build_in_dataset = dataset_config.get("BUILT_IN_DATASET")
                 # todo
