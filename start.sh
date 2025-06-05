@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -x
 echo "OPERATION_TYPE: ${OPERATION_TYPE}"
 echo "INFERENCE_RESULT: ${INFERENCE_RESULT}"
 echo "EVALUATION_RESULT:  ${EVALUATION_RESULT}"
@@ -19,7 +18,7 @@ echo "MERGED_DATASET_PATH_DICT: ${MERGED_DATASET_PATH_DICT}"
 # run operation
 case ${OPERATION_TYPE} in
     "INFERENCE")
-        echo "OPERATION_TYPE is: BATCH_INFERENCE"
+        echo "OPERATION_TYPE is: INFERENCE"
         python run.py config.py -m infer -w $TMP_OUTPUT --debug
         ;;
     "EVALUATION")
@@ -40,3 +39,7 @@ esac
 python gen_inference_evaluation_result.py
 
 # run further operation for judge mode
+if [ "${OPERATION_TYPE}" = "JUDGE" ]; then
+    echo "OPERATION_TYPE is: JUDGE, run further operation"
+    python handle_judge_result.py
+fi
