@@ -3,6 +3,7 @@ from opencompass.openicl.icl_retriever import ZeroRetriever
 from opencompass.openicl.icl_inferencer import GenInferencer
 from opencompass.datasets.custom import CustomDataset
 from opencompass.models import VLLM
+from opencompass.models import DeepseekAPI
 from os import getenv
 from json import loads as json_loads
 
@@ -151,11 +152,11 @@ if model_configs:
                     # todo
                     models += [
                         dict(
-                            type=CustomOpenAI,
+                            type=DeepseekAPI,
                             abbr=model_config_id,
                             path=api_model,
                             key=api_key,
-                            openai_api_base=[api_url],
+                            url=api_url,
                             meta_template=api_meta_template,
                             query_per_second=1,
                             max_out_len=2048,
