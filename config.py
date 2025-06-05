@@ -98,15 +98,9 @@ if model_configs:
             model_config_id = model_config.get("MODEL_CONFIG_ID")
             model_type = model_config.get("MODEL_TYPE")
             prompt = model_config.get("PROMPT")
-            temperature = (
-                model_config.get("TEMPERATURE")
-                if model_config.get("TEMPERATURE")
-                else 0
-            )
-            top_k = model_config.get("TOP_K", 0)
-            presence_penalty = (
-                model_config.get("PRESENCE_PENALTY", -1)
-            )
+            temperature = int(model_config.get("TEMPERATURE")) if model_config.get("TEMPERATURE") else 0
+            top_k = int(model_config.get("TOP_K")) if model_config.get("TOP_K") else -1
+            presence_penalty = float(model_config.get("PRESENCE_PENALTY")) if model_config.get("PRESENCE_PENALTY") else 0
             if model_type == "API":
                 # OpenAI,Spark, DeepSeek
                 api_type = model_config.get("API_TYPE")
