@@ -91,6 +91,17 @@ A tool to evaluate LLM base on open compass project.
     "API_URL": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
     "API_KEY": "sk-8c019c61a5524a4fa6222ff0e9de9130",
     "API_MODEL": "qwen-plus-2025-01-25"
+  },
+  {
+    "MODEL_CONFIG_ID": "qwen-plus-2025-01-25",
+    "MODEL_TYPE": "CUSTOM",
+    "PROMPT": "",
+    "TEMPERATURE": "",
+    "TOP_K": "",
+    "PRESENCE_PENALTY": "",
+    "CUSTOM_MODEL_NAME": "",
+    "BASE_MODEL_PATH": "/iflytek/base_model",
+    "LORA_WEIGHT_PATH": ""
   }
 ]
 ```

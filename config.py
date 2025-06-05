@@ -130,7 +130,7 @@ if model_configs:
                             meta_template=api_meta_template,
                             query_per_second=1,
                             max_out_len=2048,
-                            batch_size=8,
+                            batch_size=2,
                         )
                     ]
                 elif api_type == "Spark":
@@ -145,7 +145,7 @@ if model_configs:
                             meta_template=api_meta_template,
                             query_per_second=1,
                             max_out_len=2048,
-                            batch_size=8,
+                            batch_size=2,
                         )
                     ]
                 elif api_type == "DeepSeek":
@@ -160,7 +160,7 @@ if model_configs:
                             meta_template=api_meta_template,
                             query_per_second=1,
                             max_out_len=2048,
-                            batch_size=8,
+                            batch_size=2,
                         )
                     ]
                 else:
