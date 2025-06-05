@@ -1,5 +1,8 @@
 #!/bin/bash
 
+source ~/.bashrc
+source /usr/local/Ascend/ascend-toolkit/set_env.sh
+
 echo "OPERATION_TYPE: ${OPERATION_TYPE}"
 echo "INFERENCE_RESULT: ${INFERENCE_RESULT}"
 echo "EVALUATION_RESULT:  ${EVALUATION_RESULT}"
