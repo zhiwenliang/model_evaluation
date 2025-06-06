@@ -1,7 +1,6 @@
 from opencompass.openicl.icl_prompt_template import PromptTemplate
 from opencompass.openicl.icl_retriever import ZeroRetriever
 from opencompass.openicl.icl_inferencer import GenInferencer
-from opencompass.datasets.custom import CustomDataset
 from opencompass.models import VLLM
 from opencompass.models import DeepseekAPI
 from os import getenv
@@ -9,6 +8,7 @@ from json import loads as json_loads
 
 from model_evaluation.model.custom_openai import CustomOpenAI
 from model_evaluation.evaluator.custom_evaluator import CustomEvaluator
+from model_evaluation.dataset.custom_dataset import CustomDataset
 
 
 print("----------------------------------")
