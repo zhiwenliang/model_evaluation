@@ -107,7 +107,7 @@ if model_configs:
                 # OpenAI,Spark, DeepSeek
                 api_type = model_config.get("API_TYPE")
                 api_url = model_config.get("API_URL")
-                api_key = model_config.get("API_KEY")
+                api_key = model_config.get("API_KEY") if model_config.get("API_KEY") else ""
                 api_model = model_config.get("API_MODEL", model_config_id)
                 api_extra_config = model_config.get("API_EXTRA_CONFIG")
                 print("api_type:", api_type)
