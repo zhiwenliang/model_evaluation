@@ -1,7 +1,11 @@
 #!/bin/bash
 
 source ~/.bashrc
+export LD_LIBRARY_PATH=${ASCEND_TOOLKIT_HOME}/runtime/lib64/stub/linux/aarch64/:$LD_LIBRARY_PATH
+export PATH=/usr/local/python3.10/bin:${PATH}
+export LD_LIBRARY_PATH=/usr/local/Ascend/driver/lib64/common:/usr/local/Ascend/driver/lib64/driver:${LD_LIBRARY_PATH}
 source /usr/local/Ascend/ascend-toolkit/set_env.sh
+source /usr/local/Ascend/nnal/atb/set_env.sh
 
 echo "OPERATION_TYPE: ${OPERATION_TYPE}"
 echo "INFERENCE_RESULT: ${INFERENCE_RESULT}"
