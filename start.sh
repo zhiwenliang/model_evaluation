@@ -22,7 +22,7 @@ export TMP_OUTPUT="/tmp/output"
 echo "tmp_output: ${TMP_OUTPUT}"
 
 
-# handle custom dataset
+# handle custom dataset for evaluation or inference
 handle_custom_dataset_result=$(python handle_custom_dataset.py)
 export MERGED_DATASET_PATH_DICT=$handle_custom_dataset_result
 echo "MERGED_DATASET_PATH_DICT: ${MERGED_DATASET_PATH_DICT}"

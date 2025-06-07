@@ -2,7 +2,7 @@ from opencompass.openicl.icl_prompt_template import PromptTemplate
 from opencompass.openicl.icl_retriever import ZeroRetriever
 from opencompass.openicl.icl_inferencer import GenInferencer
 from opencompass.models import VLLM
-from opencompass.models import DeepseekAPI
+from opencompass.models import XunFeiSpark
 from os import getenv
 from json import loads as json_loads
 
@@ -34,12 +34,7 @@ custom_infer_cfg = dict(
     inferencer=dict(type=GenInferencer),
 )
 
-api_meta_template = dict(
-    round=[
-        dict(role="HUMAN", api_role="HUMAN"),
-        dict(role="BOT", api_role="BOT", generate=True),
-    ],
-)
+
 
 # datasets config
 datasets = []
@@ -104,12 +99,18 @@ if model_configs:
             top_k = int(model_config.get("TOP_K")) if model_config.get("TOP_K") else -1
             presence_penalty = float(model_config.get("PRESENCE_PENALTY")) if model_config.get("PRESENCE_PENALTY") else 0
             if model_type == "API":
+                api_meta_template = dict(
+                    round=[
+                        dict(role="HUMAN", api_role="HUMAN"),
+                        dict(role="BOT", api_role="BOT", generate=True),
+                    ],
+                )
                 # OpenAI,Spark, DeepSeek
                 api_type = model_config.get("API_TYPE")
                 api_url = model_config.get("API_URL")
                 api_key = model_config.get("API_KEY") if model_config.get("API_KEY") else ""
                 api_model = model_config.get("API_MODEL", model_config_id)
-                api_extra_config = model_config.get("API_EXTRA_CONFIG")
+                api_extra_config = model_config.get("API_EXTRA_CONFIG") if model_config.get("API_EXTRA_CONFIG") else "{}"
                 print("api_type:", api_type)
                 print("api_url:", api_url)
                 print("api_key:", api_key)
@@ -130,29 +131,20 @@ if model_configs:
                         )
                     ]
                 elif api_type == "Spark":
-                    # todo
+                    api_extra_config_json = json_loads(api_extra_config)
+                    domain = api_extra_config_json.get("DOMAIN", "")
+                    appid = api_extra_config_json.get("APPID", "")
+                    api_key = api_extra_config_json.get("API_KEY", "")
+                    api_secret = api_extra_config_json.get("API_SECRET", "")
                     models += [
                         dict(
-                            type=CustomOpenAI,
+                            type=XunFeiSpark,
                             abbr=model_config_id,
-                            path=api_model,
-                            key=api_key,
-                            openai_api_base=[api_url],
-                            meta_template=api_meta_template,
-                            query_per_second=1,
-                            max_out_len=2048,
-                            batch_size=2,
-                        )
-                    ]
-                elif api_type == "DeepSeek":
-                    # todo
-                    models += [
-                        dict(
-                            type=DeepseekAPI,
-                            abbr=model_config_id,
-                            path=api_model,
-                            key=api_key,
-                            url=api_url,
+                            path=api_url,
+                            domain=domain,
+                            appid=appid,
+                            api_secret=api_secret,
+                            api_key=api_key,
                             meta_template=api_meta_template,
                             query_per_second=1,
                             max_out_len=2048,

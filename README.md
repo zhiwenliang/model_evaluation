@@ -62,7 +62,6 @@ A tool to evaluate LLM base on open compass project.
 1. API_TYPE: API类型，用来区分请求和返回数据格式
 	- OpenAI: OpenAI 格式
 	- Spark: 星火API 格式
-	- DeepSeek: deepseek 格式
 2. API_URL: API地址
 3. API_KEY: API的key
 4. API_MODEL: API的model，有些api需要设置，不设置默认使用MODEL_CONFIG_ID
