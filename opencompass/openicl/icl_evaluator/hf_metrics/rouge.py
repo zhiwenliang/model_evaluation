@@ -148,8 +148,11 @@ class Rouge(evaluate.Metric):
         if use_aggregator:
             result = aggregator.aggregate()
             for key in result:
-                result[key] = result[key].mid.fmeasure
-
+                detail = dict()
+                detail["precision"] = result[key].mid.precision
+                detail["recall"] = result[key].mid.recall
+                detail["fmeasure"] = result[key].mid.fmeasure
+                result[key] = detail
         else:
             result = {}
             for key in scores[0]:
