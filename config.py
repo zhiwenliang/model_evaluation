@@ -105,7 +105,7 @@ if dataset_configs:
             prompt_template=dict(
                 type=PromptTemplate,
                 # todo
-                template="",
+                template="用户指令：{input}\n模型回答: {targets}}",
             ),
             retriever=dict(type=ZeroRetriever),
             inferencer=dict(type=GenInferencer),

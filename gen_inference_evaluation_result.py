@@ -41,8 +41,9 @@ for model_config_id in model_config_ids:
                 inference_result = []
                 for index, item in tmp_result.items():
                     inference_result.append({
-                        "input": item["origin_prompt"],
-                        "target": item["prediction"]
+                        "input": item.get("origin_prompt", ""),
+                        "target": item.get("gold", ""),
+                        "prediction": item.get("prediction", "")
                     })
                 # save inference result
                 if inference_result_path is not None and not os.path.exists(inference_result_path):

@@ -154,10 +154,16 @@
 ## 推理结果
 推理结果保存在 INFERENCE_RESULT 路径下，文件名为 inference_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.jsonl，推理结果为 jsonl 格式，每行一个 json 对象。
 
-示例如下：
+### 示例
 ```json
 {
     "input": "1 + 1 = ?",
     "target": "2",
+    "prediction": "2"
 }
 ```
+
+### 字段说明
+- input: 输入数据集问题
+- target: 输入数据集答案
+- prediction: 推理结果
