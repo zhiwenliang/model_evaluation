@@ -151,7 +151,12 @@
 }
 ```
 
-## 推理结果
+## 数据集格式
+
+### 输入数据集
+输入数据集目前支持平台一问一答类型数据，裁判模式（JUDGE）需要额外给出 prediction 字段用来标识推理结果
+
+### 推理结果
 推理结果保存在 INFERENCE_RESULT 路径下，文件名为 inference_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.jsonl，推理结果为 jsonl 格式，每行一个 json 对象。
 
 ### 示例

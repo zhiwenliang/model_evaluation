@@ -1,3 +1,10 @@
+"""
+config for evaluation and inference
+"""
+
+from os import getenv
+from json import loads as json_loads
+
 from opencompass.openicl.icl_prompt_template import PromptTemplate
 from opencompass.openicl.icl_retriever import ZeroRetriever
 from opencompass.openicl.icl_inferencer import GenInferencer
@@ -6,14 +13,10 @@ from opencompass.models import VLLM
 from opencompass.models import XunFeiSpark
 from opencompass.datasets import CustomDataset
 from opencompass.models.custom_openai import CustomOpenAI
-from os import getenv
-from json import loads as json_loads
-
 
 
 print("----------------------------------")
 print("Loading config...")
-# custom reader config, if operation type is EVALUATION, set output column to "target"
 operation_type = getenv("OPERATION_TYPE")
 dataset_configs = getenv("DATASET_CONFIGS")
 model_configs = getenv("MODEL_CONFIGS")
@@ -56,51 +59,59 @@ if dataset_configs:
             retriever=dict(type=ZeroRetriever),
             inferencer=dict(type=GenInferencer),
         )
-        if dataset_config_list is not None:
-            for dataset_config in dataset_config_list:
-                # DATASET_CONFIG_ID, DATASET_TYPE(BUILT_IN, CUSTOM), EVALUATION_METRICS(ROUGE-1, ROUGE-2, ROUGE-L, BLEU-4),
-                # BUILT_IN_DATASET
-                # CUSTOM_DATASET_PATH
-                # Assemble dataset config for opencompass
-                dataset_config_id = dataset_config.get("DATASET_CONFIG_ID")
-                dataset_type = dataset_config.get("DATASET_TYPE")
-                evaluation_metrics = dataset_config.get("EVALUATION_METRICS")
-                evaluation_metric_list = []
-                if evaluation_metrics:
-                    evaluation_metric_list = evaluation_metrics.split(",")
-                if dataset_type == "BUILT_IN":
-                    build_in_dataset = dataset_config.get("BUILT_IN_DATASET")
-                    # todo
-                elif dataset_type == "CUSTOM":
-                    merged_dataset_path_dict = {}
-                    if merged_dataset_paths:
-                        merged_dataset_path_dict = json_loads(merged_dataset_paths)
-                    merged_dataset_path = merged_dataset_path_dict.get(dataset_config_id)
-                    # set metrics for evaluator
-                    custom_eval_cfg = dict(
-                        evaluator=dict(type=CustomEvaluator, metrics=evaluation_metric_list),
-                    )
-                    print("dataset_config_id: ", dataset_config_id)
-                    print("merged_dataset_path: ", merged_dataset_path)
+        for dataset_config in dataset_config_list:
+            # DATASET_CONFIG_ID
+            # DATASET_TYPE(BUILT_IN, CUSTOM)
+            # EVALUATION_METRICS(ROUGE-1, ROUGE-2, ROUGE-L, BLEU-4)
+            # BUILT_IN_DATASET
+            # CUSTOM_DATASET_PATH
+            # Assemble dataset config for opencompass
+            dataset_config_id = dataset_config.get("DATASET_CONFIG_ID")
+            dataset_type = dataset_config.get("DATASET_TYPE")
+            evaluation_metrics = dataset_config.get("EVALUATION_METRICS")
+            evaluation_metric_list = []
+            if evaluation_metrics:
+                evaluation_metric_list = evaluation_metrics.split(",")
+            if dataset_type == "BUILT_IN":
+                build_in_dataset = dataset_config.get("BUILT_IN_DATASET")
+                # todo
+            elif dataset_type == "CUSTOM":
+                merged_dataset_path_dict = {}
+                if merged_dataset_paths:
+                    merged_dataset_path_dict = json_loads(merged_dataset_paths)
+                merged_path = merged_dataset_path_dict.get(dataset_config_id)
+                # set metrics for evaluator
+                custom_eval_cfg = dict(
+                    evaluator=dict(
+                        type=CustomEvaluator,
+                        metrics=evaluation_metric_list
+                    ),
+                )
+                print("dataset_config_id: ", dataset_config_id)
+                print("merged_path: ", merged_path)
 
-                    datasets += [
-                        dict(
-                            abbr=dataset_config_id,
-                            type=CustomDataset,
-                            path=merged_dataset_path,
-                            reader_cfg=custom_reader_cfg,
-                            infer_cfg=custom_infer_cfg,
-                            eval_cfg=custom_eval_cfg,
-                            local_mode=True,
-                        ),
-                    ]
+                datasets += [
+                    dict(
+                        abbr=dataset_config_id,
+                        type=CustomDataset,
+                        path=merged_path,
+                        reader_cfg=custom_reader_cfg,
+                        infer_cfg=custom_infer_cfg,
+                        eval_cfg=custom_eval_cfg,
+                        local_mode=True,
+                    ),
+                ]
     elif operation_type == "JUDGE":
         # 拼装prompt
         # 单个数据集配置，评分模式
         # 多个数据集配置，对比模式
         judge_infer_cfg = dict(
             begin=[
-                dict(role='SYSTEM', fallback_role='HUMAN', prompt=judge_prompt),
+                dict(
+                    role='SYSTEM',
+                    fallback_role='HUMAN',
+                    prompt=judge_prompt
+                ),
             ],
             prompt_template=dict(
                 type=PromptTemplate,
@@ -135,9 +146,18 @@ if model_configs:
             model_config_id = model_config.get("MODEL_CONFIG_ID")
             model_type = model_config.get("MODEL_TYPE")
             prompt = model_config.get("PROMPT")
-            temperature = int(model_config.get("TEMPERATURE")) if model_config.get("TEMPERATURE") else 0
-            top_k = int(model_config.get("TOP_K")) if model_config.get("TOP_K") else -1
-            presence_penalty = float(model_config.get("PRESENCE_PENALTY")) if model_config.get("PRESENCE_PENALTY") else 0
+            if model_config.get("TEMPERATURE"):
+                temperature = float(model_config.get("TEMPERATURE"))
+            else:
+                temperature = 0.0
+            if model_config.get("TOP_K"):
+                top_k = int(model_config.get("TOP_K"))
+            else:
+                top_k = -1
+            if model_config.get("PRESENCE_PENALTY"):
+                presence_penalty = float(model_config.get("PRESENCE_PENALTY"))
+            else:
+                presence_penalty = 0.0
             if model_type == "API":
                 api_meta_template = dict(
                     round=[
@@ -151,9 +171,15 @@ if model_configs:
                 # OpenAI,Spark, DeepSeek
                 api_type = model_config.get("API_TYPE")
                 api_url = model_config.get("API_URL")
-                api_key = model_config.get("API_KEY") if model_config.get("API_KEY") else ""
+                if model_config.get("API_KEY"):
+                    api_key = model_config.get("API_KEY")
+                else:
+                    api_key = ""
                 api_model = model_config.get("API_MODEL", model_config_id)
-                api_extra_config = model_config.get("API_EXTRA_CONFIG") if model_config.get("API_EXTRA_CONFIG") else "{}"
+                if model_config.get("API_EXTRA_CONFIG"):
+                    api_extra_config = model_config.get("API_EXTRA_CONFIG")
+                else:
+                    api_extra_config = "{}"
                 print("api_type:", api_type)
                 print("api_url:", api_url)
                 print("api_key:", api_key)
