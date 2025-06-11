@@ -20,17 +20,19 @@ print("Loading config...")
 operation_type = getenv("OPERATION_TYPE")
 dataset_configs = getenv("DATASET_CONFIGS")
 model_configs = getenv("MODEL_CONFIGS")
-merged_dataset_paths = getenv("MERGED_DATASET_PATH_DICT")
 judge_prompt = getenv("JUDGE_PROMPT")
-judge_dataset_path = getenv("JUDGE_DATASET_PATH")
+judge_mode = getenv("JUDGE_MODE")
 print("operation_type: ", operation_type)
 print("dataset_configs: ", dataset_configs)
 print("model_configs: ", model_configs)
 print("judge_prompt: ", judge_prompt)
-print("judge_dataset_path: ", judge_dataset_path)
+print("judge_mode: ", judge_mode)
 
 output_column = "target" if operation_type == "EVALUATION" else ""
-custom_reader_cfg = dict(input_columns=["input"], output_column=output_column)
+custom_reader_cfg = dict(
+    input_columns=["input", "target", "prediction", "predictions"],
+    output_column=output_column
+)
 
 custom_infer_cfg = dict(
     prompt_template=dict(
@@ -40,7 +42,6 @@ custom_infer_cfg = dict(
     retriever=dict(type=ZeroRetriever),
     inferencer=dict(type=GenInferencer),
 )
-
 
 # datasets config
 datasets = []
@@ -76,10 +77,7 @@ if dataset_configs:
                 build_in_dataset = dataset_config.get("BUILT_IN_DATASET")
                 # todo
             elif dataset_type == "CUSTOM":
-                merged_dataset_path_dict = {}
-                if merged_dataset_paths:
-                    merged_dataset_path_dict = json_loads(merged_dataset_paths)
-                merged_path = merged_dataset_path_dict.get(dataset_config_id)
+                custom_dataset_path = dataset_config.get("CUSTOM_DATASET_PATH")
                 # set metrics for evaluator
                 custom_eval_cfg = dict(
                     evaluator=dict(
@@ -88,13 +86,12 @@ if dataset_configs:
                     ),
                 )
                 print("dataset_config_id: ", dataset_config_id)
-                print("merged_path: ", merged_path)
 
                 datasets += [
                     dict(
                         abbr=dataset_config_id,
                         type=CustomDataset,
-                        path=merged_path,
+                        path=custom_dataset_path,
                         reader_cfg=custom_reader_cfg,
                         infer_cfg=custom_infer_cfg,
                         eval_cfg=custom_eval_cfg,
@@ -102,35 +99,59 @@ if dataset_configs:
                     ),
                 ]
     elif operation_type == "JUDGE":
-        # 拼装prompt
-        # 单个数据集配置，评分模式
-        # 多个数据集配置，对比模式
-        judge_infer_cfg = dict(
-            begin=[
-                dict(
-                    role='SYSTEM',
-                    fallback_role='HUMAN',
-                    prompt=judge_prompt
+        for dataset_config in dataset_config_list:
+            dataset_config_id = dataset_config.get("DATASET_CONFIG_ID")
+            custom_dataset_path = dataset_config.get("CUSTOM_DATASET_PATH")
+            # 单个数据集配置，评分模式
+            # 多个数据集配置，对比模式
+            if judge_mode == "SINGLE":
+                judge_template = (
+                    "用户指令：{input}\n"
+                    "模型回答: {prediction}\n"
+                    "参考答案：{target}"
+                )
+            elif judge_mode == "MULTIPLE":
+                judge_template = (
+                    "用户指令：{input}\n"
+                    "模型回答: {predictions}\n"
+                    "参考答案：{target}"
+                )
+            else:
+                raise ValueError(
+                    "Unsupported judge mode: {}".format(judge_mode)
+                )
+            judge_infer_cfg = dict(
+                prompt_template=dict(
+                    type=PromptTemplate,
+                    template=dict(
+                        begin=[
+                            dict(
+                                role='SYSTEM',
+                                fallback_role='HUMAN',
+                                prompt=judge_prompt
+                            ),
+                        ],
+                        round=[
+                            dict(
+                                role='HUMAN',
+                                prompt=judge_template,
+                            ),
+                        ],
+                    ),
                 ),
-            ],
-            prompt_template=dict(
-                type=PromptTemplate,
-                # todo
-                template="用户指令：{input}\n模型回答: {targets}}",
-            ),
-            retriever=dict(type=ZeroRetriever),
-            inferencer=dict(type=GenInferencer),
-        )
-        datasets += [
-            dict(
-                abbr="judge_dataset",
-                type=CustomDataset,
-                path=judge_dataset_path,
-                reader_cfg=custom_reader_cfg,
-                infer_cfg=judge_infer_cfg,
-                local_mode=True,
-            ),
-        ]
+                retriever=dict(type=ZeroRetriever),
+                inferencer=dict(type=GenInferencer),
+            )
+            datasets += [
+                dict(
+                    abbr=dataset_config_id,
+                    type=CustomDataset,
+                    path=custom_dataset_path,
+                    reader_cfg=custom_reader_cfg,
+                    infer_cfg=judge_infer_cfg,
+                    local_mode=True,
+                ),
+            ]
 
 
 # set model configs
@@ -145,7 +166,6 @@ if model_configs:
             # API_TYPE,API_URL,API_KEY,API_EXTRA_CONFIG
             model_config_id = model_config.get("MODEL_CONFIG_ID")
             model_type = model_config.get("MODEL_TYPE")
-            prompt = model_config.get("PROMPT")
             if model_config.get("TEMPERATURE"):
                 temperature = float(model_config.get("TEMPERATURE"))
             else:
@@ -158,6 +178,13 @@ if model_configs:
                 presence_penalty = float(model_config.get("PRESENCE_PENALTY"))
             else:
                 presence_penalty = 0.0
+            print("---model config---")
+            print("model_config_id: ", model_config_id)
+            print("model_type: ", model_type)
+            print("temperature: ", temperature)
+            print("top_k: ", top_k)
+            print("presence_penalty: ", presence_penalty)
+            print("------------------")
             if model_type == "API":
                 api_meta_template = dict(
                     round=[
@@ -180,11 +207,13 @@ if model_configs:
                     api_extra_config = model_config.get("API_EXTRA_CONFIG")
                 else:
                     api_extra_config = "{}"
+                print("---api config---")
                 print("api_type:", api_type)
                 print("api_url:", api_url)
                 print("api_key:", api_key)
                 print("api_model:", api_model)
                 print("api_extra_config:", api_extra_config)
+                print("----------------")
                 if api_type == "OpenAI":
                     models += [
                         dict(
@@ -203,8 +232,14 @@ if model_configs:
                     api_extra_config_json = json_loads(api_extra_config)
                     domain = api_extra_config_json.get("DOMAIN", "")
                     appid = api_extra_config_json.get("APPID", "")
-                    api_key = api_extra_config_json.get("API_KEY", "")
+                    api_key_spark = api_extra_config_json.get("API_KEY", "")
                     api_secret = api_extra_config_json.get("API_SECRET", "")
+                    print("---api extra config---")
+                    print("domain:", domain)
+                    print("appid:", appid)
+                    print("api_key_spark:", api_key_spark)
+                    print("api_secret:", api_secret)
+                    print("----------------------")
                     models += [
                         dict(
                             type=XunFeiSpark,
@@ -213,7 +248,7 @@ if model_configs:
                             domain=domain,
                             appid=appid,
                             api_secret=api_secret,
-                            api_key=api_key,
+                            api_key=api_key_spark,
                             meta_template=api_meta_template,
                             query_per_second=1,
                             max_out_len=2048,
@@ -245,9 +280,10 @@ if model_configs:
                     )
                 ]
             elif model_type == "BUILT_IN":
-                # todo
+                # todo，for future use
                 models += []
 
+print("load config done.")
 print("datasets: ", datasets)
 print("models: ", models)
 print("----------------------------------")

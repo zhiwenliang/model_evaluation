@@ -7,7 +7,7 @@ from opencompass.models import VLLM
 
 from opencompass.models.custom_openai import CustomOpenAI
 
-custom_reader_cfg = dict(input_columns=["input"], output_column="target")
+custom_reader_cfg = dict(input_columns=["input", "target", "id"], output_column="target")
 
 custom_infer_cfg = dict(
     prompt_template=dict(
@@ -18,7 +18,7 @@ custom_infer_cfg = dict(
             ],
             round=[
                 dict(role="HUMAN", prompt="{input}"),
-                dict(role="BOT", prompt="{target}"),
+                
             ],
         ),
     ),
@@ -38,6 +38,9 @@ api_meta_template = dict(
         dict(role="HUMAN", api_role="HUMAN"),
         dict(role="BOT", api_role="BOT", generate=True),
     ],
+    reserved_roles=[
+        dict(role='SYSTEM', api_role='SYSTEM'),
+    ],
 )
 
 # datasets config
@@ -49,7 +52,7 @@ custom_datasets = [
     dict(
         abbr="gsm8k_0",
         type=CustomDataset,
-        path="/Users/humuh/Downloads/merged_dataset_gsm8k_0.jsonl",
+        path="/Users/humuh/source/my/model_evaluation/pre_dataset/gsm8k_0.jsonl",
         reader_cfg=custom_reader_cfg,
         infer_cfg=custom_infer_cfg,
         eval_cfg=custom_eval_cfg,

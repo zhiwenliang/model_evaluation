@@ -22,14 +22,9 @@ export TMP_OUTPUT="/tmp/output"
 echo "tmp_output: ${TMP_OUTPUT}"
 
 
-# handle custom dataset for evaluation or inference
-handle_custom_dataset_result=$(python handle_custom_dataset.py)
-export MERGED_DATASET_PATH_DICT=$handle_custom_dataset_result
-echo "MERGED_DATASET_PATH_DICT: ${MERGED_DATASET_PATH_DICT}"
-
-# 生成裁判模式新的数据集文件
-export JUDGE_DATASET_PATH=/tmp/judge_dataset.jsonl
-python gen_judge_dataset.py
+# process custom dataset
+export DATASET_CONFIGS=$(python process_custom_dataset.py)
+echo "DATASET_CONFIGS after process_custom_dataset.py: ${DATASET_CONFIGS}"
 
 # run operation
 case ${OPERATION_TYPE} in
