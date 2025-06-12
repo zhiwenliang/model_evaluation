@@ -65,6 +65,16 @@
 3. API_KEY: API的key
 4. API_MODEL: API的model，有些api需要设置，不设置默认使用MODEL_CONFIG_ID
 5. API_EXTRA_CONFIG: 其他配置，json字符串形式
+```json
+// 讯飞云协议相关参数参考
+{
+  "DOMAIN": "",
+  "APPID": "",
+  "API_KEY": "",
+  "API_SECRET": ""
+}
+```
+
 
 #### BUILT_IN
 1. BUILD_IN_MODEL_NAME: 内置模型名称

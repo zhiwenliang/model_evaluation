@@ -48,9 +48,3 @@ esac
 
 # get inference result and evaluation result from tmp_output, save to INFERENCE_RESULT and EVALUATION_RESULT
 python gen_inference_evaluation_result.py
-
-# run further operation for judge mode
-if [ "${OPERATION_TYPE}" = "JUDGE" ]; then
-    echo "OPERATION_TYPE is: JUDGE, run further operation"
-    python handle_judge_result.py
-fi
