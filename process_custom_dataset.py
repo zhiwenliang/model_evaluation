@@ -1,5 +1,7 @@
+# flake8: noqa: D100
 import os
 import json
+from pathlib import Path
 
 
 def handle_custom_dataset(dataset_config_id, custom_dataset_path):
@@ -45,20 +47,34 @@ def handle_custom_dataset(dataset_config_id, custom_dataset_path):
     }
 }
 """
-def handle_judge_dataset(custom_dataset_path):
+def handle_judge_dataset(dataset_config_id, custom_dataset_path):
     # 
     custom_dataset_path_list = custom_dataset_path.split(",")
-    result = []
+    os.makedirs("/tmp/custom_dataset", exist_ok=True)
+    # 结果文件路径
+    result_path = (
+        f"/tmp/custom_dataset/handled_dataset_{dataset_config_id}.jsonl"
+    )
+    result = dict()
+
     # 读取文件内容，将 prediction 参数合并到相同input的json对象中
     if custom_dataset_path_list:
         for dataset_path in custom_dataset_path_list:
             if dataset_path.endswith(".jsonl"):
-                    with open(dataset_path, "r") as f:
-                        for line in f:
-                            data = json.loads(line.strip())
-                            data["predictions"] = 
-                            result.append(data)
-    
+                file_name = Path(dataset_path).stem
+                with open(dataset_path, "r") as f:
+                    for line in f:
+                        data = json.loads(line.strip())
+                        if data.get("input") in result:
+                            result[data.get("input")]["predictions"][file_name] = data.get("prediction", "")
+                        else:
+                            result[data.get("input")] = data
+
+    with open(result_path, "w") as f:
+        for item in result.values():
+            f.write(json.dumps(item, ensure_ascii=False) + "\n")
+
+    return result_path
 
 
 dataset_configs = os.getenv("DATASET_CONFIGS")
@@ -70,8 +86,9 @@ if dataset_configs:
     if judge_mode == "MULTIPLE":
         # 处理对比模式
         for dataset_config in dataset_configs_list:
+            dataset_config_id = dataset_config.get("DATASET_CONFIG_ID")
             custom_dataset_path = dataset_config.get("CUSTOM_DATASET_PATH")
-            handled_judge_dataset_path = handle_judge_dataset(custom_dataset_path)
+            handled_judge_dataset_path = handle_judge_dataset(dataset_config_id, custom_dataset_path)
             dataset_config["CUSTOM_DATASET_PATH"] = handled_judge_dataset_path
     else:
         for dataset_config in dataset_configs_list:
@@ -83,4 +100,3 @@ if dataset_configs:
                 )
                 dataset_config["CUSTOM_DATASET_PATH"] = merged_path
     print(json.dumps(dataset_configs_list, ensure_ascii=False))
-    

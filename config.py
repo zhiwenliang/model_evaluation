@@ -1,3 +1,4 @@
+# flake8: noqa: D100
 """
 config for evaluation and inference
 """
@@ -86,7 +87,6 @@ if dataset_configs:
                     ),
                 )
                 print("dataset_config_id: ", dataset_config_id)
-
                 datasets += [
                     dict(
                         abbr=dataset_config_id,

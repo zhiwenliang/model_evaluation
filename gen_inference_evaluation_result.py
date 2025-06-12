@@ -70,5 +70,5 @@ for model_config_id in model_config_ids:
                 )
                 shutil.copy(tmp_evaluation_result_path, evaluation_result)
         # JUDGE result
-        if operation_type == "JUDGE":
+        # if operation_type == "JUDGE":
             
