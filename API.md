@@ -11,6 +11,7 @@
 5. MODEL_CONFIGS: 支持传入多模型配置，使用 json 数组字符串形式，数组中 json 对象参考下方单个模型配置设置
 6. JUDGE_PROMPT：裁判模型提示词
 7. JUDGE_MODE：裁判模式，包含：打分模式（SINGLE），对比模式（MULTIPLE）
+8. INFERENCE_MODE：推理模式，包含：覆盖原答案（OVERWRITE），不覆盖原答案（NOT_OVERWRITE）
 
 ### 数据集配置（DATASET_CONFIGS）
 

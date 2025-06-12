@@ -10,6 +10,7 @@ evaluation_result_path = os.getenv("EVALUATION_RESULT", None)
 model_configs = os.getenv("MODEL_CONFIGS")
 dataset_configs = os.getenv("DATASET_CONFIGS")
 operation_type = os.getenv("OPERATION_TYPE")
+inference_mode = os.getenv("INFERENCE_MODE")
 
 model_config_ids = []
 dataset_config_ids = []
@@ -47,12 +48,19 @@ for model_config_id in model_config_ids:
                 with open(tmp_prediction_result_path, 'r') as f:
                     tmp_result = json.load(f)
                     inference_result = []
-                    for index, item in tmp_result.items():
-                        inference_result.append({
-                            "input": item.get("origin_prompt", ""),
-                            "target": item.get("gold", ""),
-                            "prediction": item.get("prediction", "")
-                        })
+                    if inference_mode == "OVERWRITE":
+                        for index, item in tmp_result.items():
+                            inference_result.append({
+                                "input": item.get("origin_prompt", ""),
+                                "target": item.get("prediction", "")
+                            })
+                    else:
+                        for index, item in tmp_result.items():
+                            inference_result.append({
+                                "input": item.get("origin_prompt", ""),
+                                "target": item.get("gold", "") ,
+                                "prediction": item.get("prediction", "")
+                            })
                     # save inference result
                     if inference_result_path is not None and not os.path.exists(inference_result_path):
                         os.makedirs(inference_result_path, exist_ok=True)
