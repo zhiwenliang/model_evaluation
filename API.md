@@ -9,9 +9,18 @@
 3. EVALUATION_RESULT: 评估结果路径，文件夹，多模型采用 evaluation_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.json 文件名输出
 4. DATASET_CONFIGS: 支持传入多个数据集，使用 json 数组字符串形式，数组中 json 对象参考下方单个数据集配置设置
 5. MODEL_CONFIGS: 支持传入多模型配置，使用 json 数组字符串形式，数组中 json 对象参考下方单个模型配置设置
-6. SYSTEM_PROMPT：提示词，不支持system角色时，会回退为human角色
-7. JUDGE_MODE：裁判模式，包含：打分模式（SINGLE），对比模式（MULTIPLE）
-8. INFERENCE_MODE：推理模式，包含：覆盖原答案（OVERWRITE），不覆盖原答案（NOT_OVERWRITE）
+6. JUDGE_MODE：裁判模式，包含：打分模式（SINGLE），对比模式（MULTIPLE）
+7. INFERENCE_MODE：推理模式，包含：覆盖原答案（OVERWRITE），不覆盖原答案（NOT_OVERWRITE）
+8. PROMPT：提示词，不支持system角色时，会回退为human角色
+9. PROMPT_MODE: System 角色注入模式(SYSTEM_PROMPT)，双 Human 轮次模式(DUAL_HUMAN)，Prompt 合并输入模式(PROMPT_MERGE), 配合 PROMPT 参数使用
+```json
+// SYSTEM_PROMPT
+[{"role": "system", "content": "{prompt}"},{"role": "human", "content": "{question}"},{"role": "bot", "content": "{anwser}"}]
+// DUAL_HUMAN
+[{"role": "human", "content": "{prompt}"},{"role": "human", "content": "{question}"},{"role": "bot", "content": "{anwser}"}]
+// PROMPT_MERGE
+[{"role": "human", "content": "{prompt}{question}"},{"role": "bot", "content": "{anwser}"}]
+```
 
 ### 数据集配置（DATASET_CONFIGS）
 
@@ -84,6 +93,7 @@
 1. CUSTOM_MODEL_NAME: 自定义模型名称
 2. BASE_MODEL_PATH: 基础模型路径
 3. LORA_WEIGHT_PATH: LoRA权重路径，有的话就会加载，否则不加载
+4. NUMS_GPUS: 占卡数量
 
 #### 示例
 
@@ -98,7 +108,7 @@
     "API_TYPE": "OpenAI",
     "API_URL": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
     "API_KEY": "sk-8c019c61a5524a4fa6222ff0e9de9130",
-    "API_MODEL": "qwen-plus-2025-01-25"
+    "API_MODEL": "qwen-plus-2025-01-25",
   },
   {
     "MODEL_CONFIG_ID": "qwen-plus-2025-01-25",
@@ -108,7 +118,8 @@
     "PRESENCE_PENALTY": "",
     "CUSTOM_MODEL_NAME": "",
     "BASE_MODEL_PATH": "/iflytek/base_model",
-    "LORA_WEIGHT_PATH": ""
+    "LORA_WEIGHT_PATH": "",
+    "NUMS_GPUS": 1
   }
 ]
 ```

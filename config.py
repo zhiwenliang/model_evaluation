@@ -16,32 +16,36 @@ from opencompass.datasets import CustomDataset
 from opencompass.models.custom_openai import CustomOpenAI
 
 
+'''
+1. OPERATION_TYPE： 操作类型，包含：推理模式（INFERENCE），评估模式（EVALUATION），裁判模式（JUDGE）
+2. INFERENCE_RESULT: 推理结果路径，文件夹，多模型采用 inference_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.jsonl 文件名输出
+3. EVALUATION_RESULT: 评估结果路径，文件夹，多模型采用 evaluation_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.json 文件名输出
+4. DATASET_CONFIGS: 支持传入多个数据集，使用 json 数组字符串形式，数组中 json 对象参考下方单个数据集配置设置
+5. MODEL_CONFIGS: 支持传入多模型配置，使用 json 数组字符串形式，数组中 json 对象参考下方单个模型配置设置
+6. JUDGE_MODE：裁判模式，包含：打分模式（SINGLE），对比模式（MULTIPLE）
+7. INFERENCE_MODE：推理模式，包含：覆盖原答案（OVERWRITE），不覆盖原答案（NOT_OVERWRITE）
+8. PROMPT：提示词，不支持system角色时，会回退为human角色
+9. PROMPT_MODE: System 角色注入模式(SYSTEM_PROMPT)，双 Human 轮次模式(DUAL_HUMAN), Prompt 合并输入模式(PROMPT_MERGE)
+'''
 print("----------------------------------")
 print("Loading config...")
 operation_type = getenv("OPERATION_TYPE")
 dataset_configs = getenv("DATASET_CONFIGS")
 model_configs = getenv("MODEL_CONFIGS")
-system_prompt = getenv("SYSTEM_PROMPT")
 judge_mode = getenv("JUDGE_MODE")
+prompt = getenv("PROMPT", "")
+prompt_mode = getenv("PROMPT_MODE")
 print("operation_type: ", operation_type)
 print("dataset_configs: ", dataset_configs)
 print("model_configs: ", model_configs)
-print("system_prompt: ", system_prompt)
 print("judge_mode: ", judge_mode)
+print("prompt: ", prompt)
+print("prompt_mode: ", prompt_mode)
 
 output_column = "target" if operation_type == "EVALUATION" else ""
 custom_reader_cfg = dict(
     input_columns=["input", "target", "prediction", "predictions"],
     output_column=output_column
-)
-
-custom_infer_cfg = dict(
-    prompt_template=dict(
-        type=PromptTemplate,
-        template="{input}",
-    ),
-    retriever=dict(type=ZeroRetriever),
-    inferencer=dict(type=GenInferencer),
 )
 
 # datasets config
@@ -61,6 +65,15 @@ if dataset_configs:
             retriever=dict(type=ZeroRetriever),
             inferencer=dict(type=GenInferencer),
         )
+        if prompt_mode == "PROMPT_MERGE":
+            custom_infer_cfg = dict(
+                prompt_template=dict(
+                    type=PromptTemplate,
+                    template=prompt.replace("{{}}", "{input}"),
+                ),
+                retriever=dict(type=ZeroRetriever),
+                inferencer=dict(type=GenInferencer),
+            )
         for dataset_config in dataset_config_list:
             # DATASET_CONFIG_ID
             # DATASET_TYPE(BUILT_IN, CUSTOM)
@@ -128,7 +141,7 @@ if dataset_configs:
                             dict(
                                 role='SYSTEM',
                                 fallback_role='HUMAN',
-                                prompt=system_prompt
+                                prompt=prompt
                             ),
                         ],
                         round=[
@@ -215,6 +228,11 @@ if model_configs:
                 print("api_extra_config:", api_extra_config)
                 print("----------------")
                 if api_type == "OpenAI":
+                    extra_body = dict(
+                        presence_penalty=presence_penalty,
+                        top_p=top_p,
+                        temperature=temperature,
+                    )
                     models += [
                         dict(
                             type=CustomOpenAI,
