@@ -70,7 +70,7 @@
 // 讯飞云协议相关参数参考
 {
   "DOMAIN": "",
-  "APPID": "",
+  "APP_ID": "",
   "API_KEY": "",
   "API_SECRET": ""
 }

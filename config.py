@@ -231,12 +231,12 @@ if model_configs:
                 elif api_type == "Spark":
                     api_extra_config_json = json_loads(api_extra_config)
                     domain = api_extra_config_json.get("DOMAIN", "")
-                    appid = api_extra_config_json.get("APPID", "")
+                    app_id = api_extra_config_json.get("APP_ID", "")
                     api_key_spark = api_extra_config_json.get("API_KEY", "")
                     api_secret = api_extra_config_json.get("API_SECRET", "")
                     print("---api extra config---")
                     print("domain:", domain)
-                    print("appid:", appid)
+                    print("appid:", app_id)
                     print("api_key_spark:", api_key_spark)
                     print("api_secret:", api_secret)
                     print("----------------------")
@@ -244,9 +244,9 @@ if model_configs:
                         dict(
                             type=XunFeiSpark,
                             abbr=model_config_id,
-                            path=api_url,
-                            domain=domain,
-                            app_id=appid,
+                            url=api_url,
+                            path=domain,
+                            app_id=app_id,
                             api_secret=api_secret,
                             api_key=api_key_spark,
                             meta_template=api_meta_template,
