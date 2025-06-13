@@ -246,7 +246,7 @@ if model_configs:
                             abbr=model_config_id,
                             path=api_url,
                             domain=domain,
-                            appid=appid,
+                            app_id=appid,
                             api_secret=api_secret,
                             api_key=api_key_spark,
                             meta_template=api_meta_template,
