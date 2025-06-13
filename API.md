@@ -9,7 +9,7 @@
 3. EVALUATION_RESULT: 评估结果路径，文件夹，多模型采用 evaluation_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.json 文件名输出
 4. DATASET_CONFIGS: 支持传入多个数据集，使用 json 数组字符串形式，数组中 json 对象参考下方单个数据集配置设置
 5. MODEL_CONFIGS: 支持传入多模型配置，使用 json 数组字符串形式，数组中 json 对象参考下方单个模型配置设置
-6. JUDGE_PROMPT：裁判模型提示词
+6. SYSTEM_PROMPT：提示词，不支持system角色时，会回退为human角色
 7. JUDGE_MODE：裁判模式，包含：打分模式（SINGLE），对比模式（MULTIPLE）
 8. INFERENCE_MODE：推理模式，包含：覆盖原答案（OVERWRITE），不覆盖原答案（NOT_OVERWRITE）
 
@@ -55,7 +55,7 @@
 	- BUILT_IN: 内置模型，根据内置配置决定模型加载和使用方式
 	- CUSTOM: 自定义模型
 3. TEMPERATURE: 控制采样温度（0 表示贪婪解码），默认0
-4. TOP_K: 每一步只从 top_k 个 token 中采样，默认-1(disable)
+4. TOP_P: 控制要考虑的排名靠前的 token 的累积概率的浮点数。必须在(0, 1]之间。设置为 1 表示考虑所有 token。，默认1
 5. PRESENCE_PENALTY: 对已经出现过的 token 增加/减少其再次出现的概率，默认0
 
 #### API
@@ -92,9 +92,8 @@
   {
     "MODEL_CONFIG_ID": "qwen-plus-2025-01-25",
     "MODEL_TYPE": "API",
-    "PROMPT": "",
     "TEMPERATURE": "",
-    "TOP_K": "",
+    "TOP_P": "",
     "PRESENCE_PENALTY": "",
     "API_TYPE": "OpenAI",
     "API_URL": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
@@ -104,9 +103,8 @@
   {
     "MODEL_CONFIG_ID": "qwen-plus-2025-01-25",
     "MODEL_TYPE": "CUSTOM",
-    "PROMPT": "",
     "TEMPERATURE": "",
-    "TOP_K": "",
+    "TOP_P": "",
     "PRESENCE_PENALTY": "",
     "CUSTOM_MODEL_NAME": "",
     "BASE_MODEL_PATH": "/iflytek/base_model",

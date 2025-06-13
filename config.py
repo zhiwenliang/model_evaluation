@@ -21,12 +21,12 @@ print("Loading config...")
 operation_type = getenv("OPERATION_TYPE")
 dataset_configs = getenv("DATASET_CONFIGS")
 model_configs = getenv("MODEL_CONFIGS")
-judge_prompt = getenv("JUDGE_PROMPT")
+system_prompt = getenv("SYSTEM_PROMPT")
 judge_mode = getenv("JUDGE_MODE")
 print("operation_type: ", operation_type)
 print("dataset_configs: ", dataset_configs)
 print("model_configs: ", model_configs)
-print("judge_prompt: ", judge_prompt)
+print("system_prompt: ", system_prompt)
 print("judge_mode: ", judge_mode)
 
 output_column = "target" if operation_type == "EVALUATION" else ""
@@ -128,7 +128,7 @@ if dataset_configs:
                             dict(
                                 role='SYSTEM',
                                 fallback_role='HUMAN',
-                                prompt=judge_prompt
+                                prompt=system_prompt
                             ),
                         ],
                         round=[
@@ -170,10 +170,10 @@ if model_configs:
                 temperature = float(model_config.get("TEMPERATURE"))
             else:
                 temperature = 0.0
-            if model_config.get("TOP_K"):
-                top_k = int(model_config.get("TOP_K"))
+            if model_config.get("TOP_P"):
+                top_p = float(model_config.get("TOP_P"))
             else:
-                top_k = -1
+                top_p = 1.0
             if model_config.get("PRESENCE_PENALTY"):
                 presence_penalty = float(model_config.get("PRESENCE_PENALTY"))
             else:
@@ -182,7 +182,7 @@ if model_configs:
             print("model_config_id: ", model_config_id)
             print("model_type: ", model_type)
             print("temperature: ", temperature)
-            print("top_k: ", top_k)
+            print("top_p: ", top_p)
             print("presence_penalty: ", presence_penalty)
             print("------------------")
             if model_type == "API":
@@ -273,7 +273,7 @@ if model_configs:
                         batch_size=16,
                         generation_kwargs=dict(
                             temperature=temperature,
-                            top_k=top_k,
+                            top_p=top_p,
                             presence_penalty=presence_penalty,
                         ),
                         run_cfg=dict(num_gpus=nums_gpus),
