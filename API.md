@@ -4,21 +4,31 @@
 
 暴露的参数，通过容器配置环境变量传入
 
-1. OPERATION_TYPE： 操作类型，包含：推理模式（INFERENCE），评估模式（EVALUATION），裁判模式（JUDGE）
+1. OPERATION_TYPE： 操作类型
+   - 推理模式（INFERENCE）
+   - 评估模式（EVALUATION）
+   - 裁判模式（JUDGE）
 2. INFERENCE_RESULT: 推理结果路径，文件夹，多模型采用 inference_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.jsonl 文件名输出
 3. EVALUATION_RESULT: 评估结果路径，文件夹，多模型采用 evaluation_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.json 文件名输出
 4. DATASET_CONFIGS: 支持传入多个数据集，使用 json 数组字符串形式，数组中 json 对象参考下方单个数据集配置设置
 5. MODEL_CONFIGS: 支持传入多模型配置，使用 json 数组字符串形式，数组中 json 对象参考下方单个模型配置设置
-6. JUDGE_MODE：裁判模式，包含：打分模式（SINGLE），对比模式（MULTIPLE）
-7. INFERENCE_MODE：推理模式，包含：覆盖原答案（OVERWRITE），不覆盖原答案（NOT_OVERWRITE）
-8. PROMPT：提示词，不支持system角色时，会回退为human角色
-9. PROMPT_MODE: System 角色注入模式(SYSTEM_PROMPT)，双 Human 轮次模式(DUAL_HUMAN)，Prompt 合并输入模式(PROMPT_MERGE), 配合 PROMPT 参数使用
+6. JUDGE_MODE：裁判模式，
+   - 打分模式（SINGLE）
+   - 对比模式（MULTIPLE）
+7. INFERENCE_MODE：推理模式，
+   - 覆盖原答案（OVERWRITE）
+   - 不覆盖原答案（NOT_OVERWRITE）
+8. PROMPT：提示词
+9. PROMPT_MODE: 配合 PROMPT 参数使用，不同模式组装出的提示词不同，参数值如下
+   -  System 角色注入模式(SYSTEM_PROMPT)：使用 system 角色传入 prompt
+   -  双 Human 轮次模式(DUAL_HUMAN)：通过两次 human 角色提问来传入 prompt
+   -  Prompt 合并输入模式(PROMPT_MERGE)：通过替换 prompt 中 `{{}}` 关键字为 `\n[{用户问题}]\n`
 ```json
 // SYSTEM_PROMPT
 [{"role": "system", "content": "{prompt}"},{"role": "human", "content": "{question}"},{"role": "bot", "content": "{anwser}"}]
 // DUAL_HUMAN
 [{"role": "human", "content": "{prompt}"},{"role": "human", "content": "{question}"},{"role": "bot", "content": "{anwser}"}]
-// PROMPT_MERGE
+// PROMPT_MERGE，会合并prompt和问题作为新的
 [{"role": "human", "content": "{prompt}{question}"},{"role": "bot", "content": "{anwser}"}]
 ```
 

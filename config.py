@@ -69,7 +69,7 @@ if dataset_configs:
             custom_infer_cfg = dict(
                 prompt_template=dict(
                     type=PromptTemplate,
-                    template=prompt.replace("{{}}", "【{input}】"),
+                    template=prompt.replace("{{}}", "\n[{input}]\n"),
                 ),
                 retriever=dict(type=ZeroRetriever),
                 inferencer=dict(type=GenInferencer),
