@@ -279,7 +279,7 @@ if model_configs:
                 custom_model_name = model_config.get("CUSTOM_MODEL_NAME")
                 base_model_path = model_config.get("BASE_MODEL_PATH")
                 lora_weight_path = model_config.get("LORA_WEIGHT_PATH")
-                nums_gpus = 1
+                nums_gpus = model_config.get("NUMS_GPUS", 1)
                 models += [
                     dict(
                         type=VLLM,
@@ -287,7 +287,7 @@ if model_configs:
                         path=base_model_path,
                         lora_path=lora_weight_path,
                         model_kwargs=dict(tensor_parallel_size=1),
-                        batch_size=16,
+                        batch_size=1,
                         generation_kwargs=dict(
                             temperature=temperature,
                             top_p=top_p,
