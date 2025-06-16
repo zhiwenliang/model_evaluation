@@ -81,18 +81,22 @@ class LocalRunner(BaseRunner):
         import torch
 
         if is_npu_available():
+            print("is_npu_available")
             visible_devices = 'ASCEND_RT_VISIBLE_DEVICES'
             device_nums = torch.npu.device_count()
         else:
+            print("is_cuda_available")
             visible_devices = 'CUDA_VISIBLE_DEVICES'
             device_nums = torch.cuda.device_count()
         if visible_devices in os.environ:
+            print("visible_devices in os.environ: ", visible_devices)
             all_gpu_ids = [
                 int(i)
                 for i in re.findall(r'(?<!-)\d+', os.getenv(visible_devices))
             ]
         else:
             all_gpu_ids = list(range(device_nums))
+        print("all_gpu_ids", all_gpu_ids)
 
         if self.debug:
             for task in tasks:
