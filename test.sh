@@ -12,5 +12,7 @@ export OPERATION_TYPE="INFERENCE"
 export INFERENCE_RESULT='/tmp/inference'
 export EVALUATION_RESULT='/tmp/evaluation'
 export INFERENCE_MODE="OVERWRITE"
+export PROMPT="假设你是一名专家，请根据用户指令，给出模型回答。{{}}"
+export PROMPT_MODE="PROMPT_MERGE"
 
 bash start.sh
