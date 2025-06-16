@@ -11,7 +11,7 @@ from opencompass.openicl.icl_retriever import ZeroRetriever
 from opencompass.openicl.icl_inferencer import GenInferencer
 from opencompass.openicl.icl_evaluator.custom_evaluator import CustomEvaluator
 from opencompass.models import VLLM
-from opencompass.models import XunFei
+from opencompass.models import CustomXunFeiApi
 from opencompass.datasets import CustomDataset
 from opencompass.models.custom_openai import CustomOpenAI
 
@@ -260,7 +260,7 @@ if model_configs:
                     print("----------------------")
                     models += [
                         dict(
-                            type=XunFei,
+                            type=CustomXunFeiApi,
                             abbr=model_config_id,
                             path=api_url,
                             appid=app_id,

@@ -11,5 +11,6 @@ export DATASET_CONFIGS='[{"DATASET_CONFIG_ID":"gsm8k_1","DATASET_TYPE":"CUSTOM",
 export OPERATION_TYPE="INFERENCE"
 export INFERENCE_RESULT='/tmp/inference'
 export EVALUATION_RESULT='/tmp/evaluation'
+export INFERENCE_MODE="OVERWRITE"
 
 bash start.sh
