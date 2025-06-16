@@ -11,7 +11,7 @@ from opencompass.openicl.icl_retriever import ZeroRetriever
 from opencompass.openicl.icl_inferencer import GenInferencer
 from opencompass.openicl.icl_evaluator.custom_evaluator import CustomEvaluator
 from opencompass.models import VLLM
-from opencompass.models import XunFeiSpark
+from opencompass.models import XunFei
 from opencompass.datasets import CustomDataset
 from opencompass.models.custom_openai import CustomOpenAI
 
@@ -254,17 +254,16 @@ if model_configs:
                     api_secret = api_extra_config_json.get("API_SECRET", "")
                     print("---api extra config---")
                     print("domain:", domain)
-                    print("appid:", app_id)
+                    print("app_id:", app_id)
                     print("api_key_spark:", api_key_spark)
                     print("api_secret:", api_secret)
                     print("----------------------")
                     models += [
                         dict(
-                            type=XunFeiSpark,
+                            type=XunFei,
                             abbr=model_config_id,
-                            url=api_url,
-                            path=domain,
-                            app_id=app_id,
+                            path=api_url,
+                            appid=app_id,
                             api_secret=api_secret,
                             api_key=api_key_spark,
                             meta_template=api_meta_template,
