@@ -2,6 +2,7 @@
 import os
 import json
 import shutil
+import re
 
 tmp_output_path = os.getenv("TMP_OUTPUT")
 print("tmp_output_path:", tmp_output_path)
@@ -76,8 +77,32 @@ for model_config_id in model_config_ids:
                 evaluation_result = os.path.join(
                     str(evaluation_result_path),
                     f"evaluation_{model_config_id}_{dataset_config_id}.json"
-                )
+                )   
                 shutil.copy(tmp_evaluation_result_path, evaluation_result)
         # JUDGE result
-        # if operation_type == "JUDGE":
-            
+        if operation_type == "JUDGE":
+            if os.path.exists(tmp_prediction_result_path):
+                with open(tmp_prediction_result_path, 'r') as f:
+                    tmp_result = json.load(f)
+                    inference_result = []
+                    for index, item in tmp_result.items():
+                            origin_prompt = item.get("origin_prompt", "")
+                            # todo 利用正则解析原问题
+                            last_human_prompt=origin_prompt[-1].get("prompt", "")
+                            pattern = r"用户指令：(.*?)\n"
+                            match = re.search(pattern, last_human_prompt)
+                            if match:
+                                input = match.group(1)
+                            else:
+                                input = last_human_prompt
+                            inference_result.append({
+                                "input": input,
+                                "score": item.get("prediction", "")
+                            })
+                    # save inference result
+                    if inference_result_path is not None and not os.path.exists(inference_result_path):
+                        os.makedirs(inference_result_path, exist_ok=True)
+                    inference_result_file = os.path.join(str(inference_result_path), f"inference_{model_config_id}_{dataset_config_id}.jsonl")
+                    with open(inference_result_file, 'w') as out_f:
+                        for each_inference in inference_result:
+                            out_f.write(json.dumps(each_inference, ensure_ascii=False) + '\n')
