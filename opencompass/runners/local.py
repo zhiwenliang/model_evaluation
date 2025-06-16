@@ -81,9 +81,11 @@ class LocalRunner(BaseRunner):
         import torch
 
         if is_npu_available():
+            print("is_npu_available")
             visible_devices = 'ASCEND_VISIBLE_DEVICES'
             device_nums = torch.npu.device_count()
         else:
+            print("is_cuda_available")
             visible_devices = 'CUDA_VISIBLE_DEVICES'
             device_nums = torch.cuda.device_count()
         if visible_devices in os.environ:
