@@ -102,7 +102,6 @@ for model_config_id in model_config_ids:
                     # save inference result
                     if evaluation_result_path is not None and not os.path.exists(evaluation_result_path):
                         os.makedirs(evaluation_result_path, exist_ok=True)
-                    evaluation_result_file = os.path.join(str(evaluation_result_path), f"evaluation_{model_config_id}_{dataset_config_id}.jsonl")
+                    evaluation_result_file = os.path.join(str(evaluation_result_path), f"evaluation_{model_config_id}_{dataset_config_id}.json")
                     with open(evaluation_result_file, 'w') as out_f:
-                        for each_evaluation in evaluation_result:
-                            out_f.write(json.dumps(each_evaluation, ensure_ascii=False) + '\n')
+                        out_f.write(json.dumps(evaluation_result, ensure_ascii=False))

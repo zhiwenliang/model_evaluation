@@ -120,14 +120,14 @@ if dataset_configs:
             if judge_mode == "SINGLE":
                 judge_template = (
                     "用户指令：{input}\n"
-                    "模型回答: {prediction}\n"
-                    "参考答案：{target}"
+                    "参考答案：{target}\n"
+                    "模型回答：{prediction}\n"
                 )
             elif judge_mode == "MULTIPLE":
                 judge_template = (
                     "用户指令：{input}\n"
-                    "模型回答: {predictions}\n"
-                    "参考答案：{target}"
+                    "模型回答：{predictions}\n"
+                    "参考答案：{target}\n"
                 )
             else:
                 raise ValueError(

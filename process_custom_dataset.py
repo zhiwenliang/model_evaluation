@@ -61,14 +61,23 @@ def handle_judge_dataset(dataset_config_id, custom_dataset_path):
     if custom_dataset_path_list:
         for dataset_path in custom_dataset_path_list:
             if dataset_path.endswith(".jsonl"):
-                file_name = Path(dataset_path).stem
+                # inference_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.jsonl
+                model_config_id = Path(dataset_path).stem.replace("inference_", "").replace(f"_{dataset_config_id}", "")
                 with open(dataset_path, "r") as f:
                     for line in f:
-                        data = json.loads(line.strip())
+                        data = json.loads(line)
                         if data.get("input") in result:
-                            result[data.get("input")]["predictions"][file_name] = data.get("prediction", "")
+                            result[data.get("input")]["predictions"].append({
+                                model_config_id: data.get("prediction", "")
+                            })
                         else:
-                            result[data.get("input")] = data
+                            result[data.get("input")] = dict()
+                            result[data.get("input")]["input"] = data.get("input")
+                            result[data.get("input")]["predictions"] = [
+                                {
+                                    model_config_id: data.get("prediction", "")
+                                }
+                            ]
 
     with open(result_path, "w") as f:
         for item in result.values():

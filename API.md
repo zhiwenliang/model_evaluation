@@ -97,7 +97,7 @@
 | CUSTOM_MODEL_NAME | 否 | 自定义模型名称 |
 | BASE_MODEL_PATH | 是 | 基础模型路径 |
 | LORA_WEIGHT_PATH | 否 | LoRA权重路径，有的话就会加载，否则不加载 |
-| NUMS_GPUS | 否 | 占卡数量 |
+| NUMS_GPUS | 是 | 占卡数量 |
 
 #### 模型配置类型 - BUILT_IN
 
