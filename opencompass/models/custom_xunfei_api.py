@@ -221,7 +221,7 @@ class CustomXunFeiApi(BaseAPIModel):
         for _ in range(self.retry):
             self.acquire()
             ws.run_forever(sslopt={'cert_reqs': self.ssl.CERT_NONE})
-            content_received.wait(30)
+            content_received.wait(120)
             self.release()
             if err_code == 0:
                 return msg.strip()
