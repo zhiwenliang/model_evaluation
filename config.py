@@ -42,7 +42,7 @@ print("judge_mode: ", judge_mode)
 print("prompt: ", prompt)
 print("prompt_mode: ", prompt_mode)
 
-output_column = "target" if operation_type == "EVALUATION" else ""
+output_column = "target" if operation_type in ["EVALUATION", "INFERENCE"] else ""
 custom_reader_cfg = dict(
     input_columns=["input", "target", "prediction", "predictions"],
     output_column=output_column
