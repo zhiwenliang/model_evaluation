@@ -14,6 +14,7 @@ from .huggingface_above_v4_33 import (_convert_chat_messages,
 
 try:
     from vllm import LLM, SamplingParams
+    from vllm.lora.request import LoRARequest
 except ImportError:
     LLM, SamplingParams = None, None
 
@@ -27,6 +28,7 @@ class VLLMwithChatTemplate(BaseModel):
         tokenizer_only: bool = False,
         generation_kwargs: dict = dict(),
         max_seq_len: int = None,
+        lora_path: str = None,
         meta_template: Optional[Dict] = None,
         fastchat_template: Optional[str] = None,
         stop_words: List[str] = [],
@@ -36,6 +38,7 @@ class VLLMwithChatTemplate(BaseModel):
         self.logger = get_logger()
         self.path = path
         self.tokenizer_only = tokenizer_only
+        self.lora_path = lora_path
         self.template_parser = _get_meta_template(meta_template)
         self.max_seq_len = _get_possible_max_seq_len(max_seq_len, path)
         if tokenizer_only:
@@ -117,7 +120,13 @@ class VLLMwithChatTemplate(BaseModel):
         self.logger.info('Sampling Params of vLLM: ')
         self.logger.info(sampling_kwargs)
 
-        outputs = self.model.generate(messages, sampling_kwargs)
+        if not self.lora_path:
+            outputs = self.model.generate(messages, sampling_kwargs)
+        else:
+            outputs = self.model.generate(messages, sampling_kwargs,
+                                          lora_request=LoRARequest(
+                                              'sql_adapter', 1,
+                                              self.lora_path))
 
         prompt_list, output_strs = [], []
         for output in outputs:

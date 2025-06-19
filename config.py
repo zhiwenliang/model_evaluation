@@ -10,7 +10,7 @@ from opencompass.openicl.icl_prompt_template import PromptTemplate
 from opencompass.openicl.icl_retriever import ZeroRetriever
 from opencompass.openicl.icl_inferencer import GenInferencer
 from opencompass.openicl.icl_evaluator.custom_evaluator import CustomEvaluator
-from opencompass.models import VLLM
+from opencompass.models import VLLMwithChatTemplate
 from opencompass.models import CustomXunFeiApi
 from opencompass.datasets import CustomDataset
 from opencompass.models.custom_openai import CustomOpenAI
@@ -285,7 +285,7 @@ if model_configs:
                 nums_gpus = model_config.get("NUMS_GPUS", 1)
                 models += [
                     dict(
-                        type=VLLM,
+                        type=VLLMwithChatTemplate,
                         abbr=model_config_id,
                         path=base_model_path,
                         lora_path=lora_weight_path,
