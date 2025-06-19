@@ -97,6 +97,7 @@ for model_config_id in model_config_ids:
                     tmp_result = json.load(f)
                     evaluation_result = []
                     for index, item in tmp_result.items():
+                            logger.info(item)
                             origin_prompt = item.get("origin_prompt", "")
                             # 利用正则解析原问题
                             last_human_prompt=origin_prompt[-1].get("prompt", "")
