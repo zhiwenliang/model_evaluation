@@ -66,9 +66,13 @@ for model_config_id in model_config_ids:
                     if inference_result_path is not None and not os.path.exists(inference_result_path):
                         os.makedirs(inference_result_path, exist_ok=True)
                     inference_result_file = os.path.join(str(inference_result_path), f"inference_{model_config_id}_{dataset_config_id}.jsonl")
+                    print(inference_result)
                     with open(inference_result_file, 'w') as out_f:
                         for each_inference in inference_result:
                             out_f.write(json.dumps(each_inference, ensure_ascii=False) + '\n')
+            else:
+                print("Inference result is not exist")
+                exit(1)
         # evaluation result
         if operation_type == "EVALUATION":
             if os.path.exists(tmp_evaluation_result_path):
@@ -77,8 +81,11 @@ for model_config_id in model_config_ids:
                 evaluation_result = os.path.join(
                     str(evaluation_result_path),
                     f"evaluation_{model_config_id}_{dataset_config_id}.json"
-                )   
+                )
                 shutil.copy(tmp_evaluation_result_path, evaluation_result)
+            else:
+                print("Evaluation result is not exist")
+                exit(1)
         # JUDGE result
         if operation_type == "JUDGE":
             if os.path.exists(tmp_prediction_result_path):
@@ -99,9 +106,13 @@ for model_config_id in model_config_ids:
                                 "input": input,
                                 "score": item.get("prediction", "")
                             })
+                    print(evaluation_result)
                     # save inference result
                     if evaluation_result_path is not None and not os.path.exists(evaluation_result_path):
                         os.makedirs(evaluation_result_path, exist_ok=True)
                     evaluation_result_file = os.path.join(str(evaluation_result_path), f"evaluation_{model_config_id}_{dataset_config_id}.json")
                     with open(evaluation_result_file, 'w') as out_f:
                         out_f.write(json.dumps(evaluation_result, ensure_ascii=False))
+            else:
+                print("Judge result is not exist")
+                exit(1)
