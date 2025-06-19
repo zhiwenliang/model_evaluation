@@ -3,9 +3,13 @@ import os
 import json
 import shutil
 import re
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 tmp_output_path = os.getenv("TMP_OUTPUT")
-print("tmp_output_path:", tmp_output_path)
+logger.info("tmp_output_path: %s", tmp_output_path)
 inference_result_path = os.getenv("INFERENCE_RESULT", None)
 evaluation_result_path = os.getenv("EVALUATION_RESULT", None)
 model_configs = os.getenv("MODEL_CONFIGS")
@@ -35,7 +39,7 @@ subdir = ""
 if len(subdirs) > 0:
     subdir = subdirs[-1]
 else:
-    print("Multiple subdirectories found in TMP_OUTPUT, subdirs:", subdirs)
+    logger.error("Multiple subdirectories found in TMP_OUTPUT, subdirs: %s", subdirs)
     exit(1)
 
 
@@ -71,7 +75,7 @@ for model_config_id in model_config_ids:
                         for each_inference in inference_result:
                             out_f.write(json.dumps(each_inference, ensure_ascii=False) + '\n')
             else:
-                print("Inference result is not exist")
+                logger.error("Inference result is not exist")
                 exit(1)
         # evaluation result
         if operation_type == "EVALUATION":
@@ -84,7 +88,7 @@ for model_config_id in model_config_ids:
                 )
                 shutil.copy(tmp_evaluation_result_path, evaluation_result)
             else:
-                print("Evaluation result is not exist")
+                logger.error("Evaluation result is not exist")
                 exit(1)
         # JUDGE result
         if operation_type == "JUDGE":
@@ -106,7 +110,7 @@ for model_config_id in model_config_ids:
                                 "input": input,
                                 "score": item.get("prediction", "")
                             })
-                    print(evaluation_result)
+                    logger.debug("evaluate result is: %s", evaluation_result)
                     # save inference result
                     if evaluation_result_path is not None and not os.path.exists(evaluation_result_path):
                         os.makedirs(evaluation_result_path, exist_ok=True)
@@ -114,5 +118,5 @@ for model_config_id in model_config_ids:
                     with open(evaluation_result_file, 'w') as out_f:
                         out_f.write(json.dumps(evaluation_result, ensure_ascii=False))
             else:
-                print("Judge result is not exist")
+                logger.error("Judge result is not exist")
                 exit(1)
