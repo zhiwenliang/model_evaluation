@@ -198,8 +198,8 @@ if model_configs:
             print("top_p: ", top_p)
             print("presence_penalty: ", presence_penalty)
             print("------------------")
-            if model_type == "API":
-                api_meta_template = dict(
+
+            api_meta_template = dict(
                     round=[
                         dict(role="HUMAN", api_role="HUMAN"),
                         dict(role="BOT", api_role="BOT", generate=True),
@@ -207,7 +207,10 @@ if model_configs:
                     reserved_roles=[
                         dict(role='SYSTEM', api_role='SYSTEM'),
                     ],
-                )
+            )
+            
+            if model_type == "API":
+                
                 # OpenAI,Spark, DeepSeek
                 api_type = model_config.get("API_TYPE")
                 api_url = model_config.get("API_URL")
@@ -294,6 +297,7 @@ if model_configs:
                             presence_penalty=presence_penalty,
                         ),
                         run_cfg=dict(num_gpus=nums_gpus),
+                        meta_template=api_meta_template
                     )
                 ]
             elif model_type == "BUILT_IN":
