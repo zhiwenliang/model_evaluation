@@ -200,13 +200,13 @@ if model_configs:
             print("------------------")
 
             api_meta_template = dict(
-                    round=[
-                        dict(role="HUMAN", api_role="HUMAN"),
-                        dict(role="BOT", api_role="BOT", generate=True),
-                    ],
-                    reserved_roles=[
-                        dict(role='SYSTEM', api_role='SYSTEM'),
-                    ],
+                round=[
+                    dict(role="HUMAN", api_role="HUMAN"),
+                    dict(role="BOT", api_role="BOT", generate=True),
+                ],
+                reserved_roles=[
+                    dict(role='SYSTEM', api_role='SYSTEM'),
+                ],
             )
             
             if model_type == "API":
