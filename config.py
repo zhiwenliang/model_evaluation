@@ -289,7 +289,7 @@ if model_configs:
                         abbr=model_config_id,
                         path=base_model_path,
                         lora_path=lora_weight_path,
-                        model_kwargs=dict(tensor_parallel_size=1),
+                        model_kwargs=dict(tensor_parallel_size=nums_gpus),
                         batch_size=1,
                         generation_kwargs=dict(
                             temperature=temperature,
