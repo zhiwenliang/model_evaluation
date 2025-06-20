@@ -117,7 +117,7 @@
     "PRESENCE_PENALTY": "",
     "API_TYPE": "OpenAI",
     "API_URL": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
-    "API_KEY": "sk-8c019c61a5524a4fa6222ff0e9de9130",
+    "API_KEY": "dasfasdfasdfasdf",
     "API_MODEL": "qwen-plus-2025-01-25",
   },
   {
