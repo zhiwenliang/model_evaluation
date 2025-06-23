@@ -15,18 +15,42 @@ from opencompass.models import CustomXunFeiApi
 from opencompass.datasets import CustomDataset
 from opencompass.models.custom_openai import CustomOpenAI
 
+from mmengine.config import read_base
 
-'''
-1. OPERATION_TYPE： 操作类型，包含：推理模式（INFERENCE），评估模式（EVALUATION），裁判模式（JUDGE）
-2. INFERENCE_RESULT: 推理结果路径，文件夹，多模型采用 inference_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.jsonl 文件名输出
-3. EVALUATION_RESULT: 评估结果路径，文件夹，多模型采用 evaluation_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.json 文件名输出
-4. DATASET_CONFIGS: 支持传入多个数据集，使用 json 数组字符串形式，数组中 json 对象参考下方单个数据集配置设置
-5. MODEL_CONFIGS: 支持传入多模型配置，使用 json 数组字符串形式，数组中 json 对象参考下方单个模型配置设置
-6. JUDGE_MODE：裁判模式，包含：打分模式（SINGLE），对比模式（MULTIPLE）
-7. INFERENCE_MODE：推理模式，包含：覆盖原答案（OVERWRITE），不覆盖原答案（NOT_OVERWRITE）
-8. PROMPT：提示词，不支持system角色时，会回退为human角色
-9. PROMPT_MODE: System 角色注入模式(SYSTEM_PROMPT)，双 Human 轮次模式(DUAL_HUMAN), Prompt 合并输入模式(PROMPT_MERGE)
-'''
+with read_base():
+    # Examine: AGIEval, ARC-e, ARC-c, GaokaoBench
+    from opencompass.configs.datasets.agieval.agieval_gen import agieval_datasets
+    from opencompass.configs.datasets.GaokaoBench.GaokaoBench_gen import GaokaoBench_datasets
+    # Knowledge: BoolQ
+    from opencompass.configs.datasets.SuperGLUE_BoolQ.SuperGLUE_BoolQ_gen import BoolQ_datasets
+    # Reasoning: WinoGrande, DROP, GPQA
+    from opencompass.configs.datasets.winogrande.winogrande_gen import winogrande_datasets
+    from opencompass.configs.datasets.drop.drop_gen import drop_datasets
+    from opencompass.configs.datasets.gpqa.gpqa_gen import gpqa_datasets
+    # Agent: T-Eval
+    from opencompass.configs.datasets.teval.teval_en_gen import teval_datasets as teval_en_datasets
+    from opencompass.configs.datasets.teval.teval_zh_gen import teval_datasets as teval_zh_datasets
+    # Understanding: RACE
+    from opencompass.configs.datasets.race.race_gen import race_datasets
+    # Code: HumanEval
+    from opencompass.configs.datasets.humaneval.humaneval_gen import humaneval_datasets
+    # Other: IFEval
+    from opencompass.configs.datasets.IFEval.IFEval_gen import ifeval_datasets
+
+builtin_dataset_map = {
+    "AGIEval": agieval_datasets,
+    "GaokaoBench": GaokaoBench_datasets,
+    "BoolQ": BoolQ_datasets,
+    "WinoGrande": winogrande_datasets,
+    "DROP": drop_datasets,
+    "GPQA": gpqa_datasets,
+    "T-Eval": [teval_en_datasets, teval_zh_datasets],
+    "RACE": race_datasets,
+    "HumanEval": humaneval_datasets,
+    "IFEval": ifeval_datasets,
+}
+
+
 print("----------------------------------")
 print("Loading config...")
 operation_type = getenv("OPERATION_TYPE")
@@ -89,7 +113,13 @@ if dataset_configs:
                 evaluation_metric_list = evaluation_metrics.split(",")
             if dataset_type == "BUILT_IN":
                 build_in_dataset = dataset_config.get("BUILT_IN_DATASET")
-                # todo
+                build_in_dataset_list = build_in_dataset.split(",")
+                # add built-in datasets
+                # Map built-in dataset names to their corresponding variables
+                for name in build_in_dataset_list:
+                    datasets_to_add = builtin_dataset_map.get(name)
+                    if datasets_to_add:
+                        datasets += datasets_to_add
             elif dataset_type == "CUSTOM":
                 custom_dataset_path = dataset_config.get("CUSTOM_DATASET_PATH")
                 # set metrics for evaluator

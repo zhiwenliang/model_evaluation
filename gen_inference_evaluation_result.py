@@ -5,6 +5,8 @@ import shutil
 import re
 import logging
 
+agieval_datasets = ['agieval-logiqa-en', 'agieval-jec-qa-ca', 'agieval-lsat-rc', 'agieval-math', 'agieval-sat-math', 'agieval-gaokao-mathqa', 'agieval-aqua-rat', 'agieval-lsat-ar', 'agieval-gaokao-biology', 'agieval-gaokao-physics', 'agieval-gaokao-mathcloze', 'agieval-jec-qa-kd', 'agieval-logiqa-zh', 'agieval-gaokao-history', 'agieval-sat-en-without-passage', 'agieval-gaokao-english', 'agieval-sat-en', 'agieval-gaokao-chemistry', 'agieval-gaokao-geography', 'agieval-gaokao-chinese', 'agieval-lsat-lr']
+
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -19,6 +21,7 @@ inference_mode = os.getenv("INFERENCE_MODE")
 
 model_config_ids = []
 dataset_config_ids = []
+built_in_datasets = []
 # get model_config_id list from model_configs
 if model_configs:
     model_config_list = json.loads(model_configs)
@@ -29,10 +32,11 @@ if model_configs:
 # get dataset_config_id list from dataset_configs
 if dataset_configs:
     dataset_config_list = json.loads(dataset_configs)
-    dataset_config_ids = [
-        dataset_config['DATASET_CONFIG_ID']
-        for dataset_config in dataset_config_list
-    ]
+    for dataset_config in dataset_config_list:
+        if dataset_config.get("DATASET_TYPE") == "BUILT_IN":
+            built_in_datasets.append(dataset_config)
+        else:
+            dataset_config_ids.append(dataset_config.get("DATASET_CONFIG_ID"))
 
 subdirs = sorted([d for d in os.listdir(tmp_output_path)])
 subdir = ""
@@ -44,6 +48,30 @@ else:
 
 
 for model_config_id in model_config_ids:
+    # 处理内置数据集，不保存推理结果
+    for built_in_dataset in built_in_datasets:
+        built_in_dataset_id = built_in_dataset.get("DATASET_CONFIG_ID")
+        built_in_dataset_name = built_in_dataset.get("BUILT_IN_DATASET")
+        evaluation_result = []
+        if built_in_dataset_name == "AGIEval":
+            for dataset_name in agieval_datasets:
+                tmp_evaluation_result_path = os.path.join(str(tmp_output_path), subdir, "results", str(model_config_id), f"{dataset_name}.json")
+                if os.path.exists(tmp_evaluation_result_path):
+                    with open(tmp_evaluation_result_path, 'r') as f:
+                        tmp_result = json.load(f)
+                        evaluation_result.append({
+                            dataset_name: tmp_result
+                        })
+                else:
+                    logger.error("Evaluation result is not exist for %s", dataset_name)
+        elif built_in_dataset_name == "ARC-e":
+        
+        # save evaluation result
+        if evaluation_result_path is not None and not os.path.exists(evaluation_result_path):
+            os.makedirs(evaluation_result_path, exist_ok=True)
+        evaluation_result_file = os.path.join(str(evaluation_result_path), f"evaluation_{model_config_id}_{built_in_dataset_id}.json")
+        
+    # 处理自定义数据集
     for dataset_config_id in dataset_config_ids:
         tmp_prediction_result_path = os.path.join(str(tmp_output_path), subdir, "predictions", str(model_config_id), f"{dataset_config_id}.json")
         tmp_evaluation_result_path = os.path.join(str(tmp_output_path), subdir, "results", str(model_config_id), f"{dataset_config_id}.json")
@@ -76,7 +104,6 @@ for model_config_id in model_config_ids:
                             out_f.write(json.dumps(each_inference, ensure_ascii=False) + '\n')
             else:
                 logger.error("Inference result is not exist")
-                exit(1)
         # evaluation result
         if operation_type == "EVALUATION":
             if os.path.exists(tmp_evaluation_result_path):
@@ -89,7 +116,6 @@ for model_config_id in model_config_ids:
                 shutil.copy(tmp_evaluation_result_path, evaluation_result)
             else:
                 logger.error("Evaluation result is not exist")
-                exit(1)
         # JUDGE result
         if operation_type == "JUDGE":
             if os.path.exists(tmp_prediction_result_path):
@@ -120,4 +146,3 @@ for model_config_id in model_config_ids:
                         out_f.write(json.dumps(evaluation_result, ensure_ascii=False))
             else:
                 logger.error("Judge result is not exist")
-                exit(1)
