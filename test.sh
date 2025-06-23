@@ -9,7 +9,7 @@ export MODEL_CONFIGS='[{"MODEL_CONFIG_ID":"gemma3:1b","MODEL_TYPE":"API","PROMPT
 # spark
 # export MODEL_CONFIGS='[{"MODEL_CONFIG_ID":"","MODEL_TYPE":"API","PROMPT":"","TEMPERATURE":"","TOP_P":"","PRESENCE_PENALTY":"","API_TYPE":"Spark","API_URL":"ws://172.30.212.36:80/default/public-cluster-npu/inference/bt-none-96c2dd8/inference//turing/v3/gpt","API_KEY":"","API_MODEL":""}]'
 # export DATASET_CONFIGS='[{"DATASET_CONFIG_ID":"gsm8k_1","DATASET_TYPE":"CUSTOM","CUSTOM_DATASET_PATH":"/Users/humuh/source/my/model_evaluation/pre_dataset/gsm8k_0.jsonl", "EVALUATION_METRICS":"BLEU-4,rouge1,rouge2,rougeL,rougeLsum"}]'
-export DATASET_CONFIGS='[{"DATASET_CONFIG_ID":"AGIEval","DATASET_TYPE":"BUILT_IN","BUILT_IN_DATASET":"AGIEval"}]'
+export DATASET_CONFIGS='[{"DATASET_CONFIG_ID":"GaokaoBench","DATASET_TYPE":"BUILT_IN","BUILT_IN_DATASET":"GaokaoBench"}]'
 export OPERATION_TYPE="EVALUATION"
 export INFERENCE_RESULT='/tmp/inference'
 export EVALUATION_RESULT='/tmp/evaluation'

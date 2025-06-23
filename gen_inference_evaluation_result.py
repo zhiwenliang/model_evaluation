@@ -52,25 +52,23 @@ for model_config_id in model_config_ids:
     for built_in_dataset in built_in_datasets:
         built_in_dataset_id = built_in_dataset.get("DATASET_CONFIG_ID")
         built_in_dataset_name = built_in_dataset.get("BUILT_IN_DATASET")
-        evaluation_result = []
-        if built_in_dataset_name == "AGIEval":
-            for dataset_name in agieval_datasets:
-                tmp_evaluation_result_path = os.path.join(str(tmp_output_path), subdir, "results", str(model_config_id), f"{dataset_name}.json")
-                if os.path.exists(tmp_evaluation_result_path):
-                    with open(tmp_evaluation_result_path, 'r') as f:
+        evaluation_result = dict()
+        tmp_evaluation_result_path = os.path.join(str(tmp_output_path), subdir, "results", str(model_config_id))
+        if os.path.exists(tmp_evaluation_result_path):
+            # loop all json file in tmp_evaluation_result_path
+            for file in os.listdir(tmp_evaluation_result_path):
+                if file.endswith(".json"):
+                    with open(os.path.join(tmp_evaluation_result_path, file), 'r') as f:
                         tmp_result = json.load(f)
-                        evaluation_result.append({
-                            dataset_name: tmp_result
-                        })
-                else:
-                    logger.error("Evaluation result is not exist for %s", dataset_name)
-        elif built_in_dataset_name == "ARC-e":
-        
+                        evaluation_result[file.split(".")[0]] = tmp_result
+        else:
+            logger.error("Evaluation result is not exist for %s", built_in_dataset_name)        
         # save evaluation result
         if evaluation_result_path is not None and not os.path.exists(evaluation_result_path):
             os.makedirs(evaluation_result_path, exist_ok=True)
         evaluation_result_file = os.path.join(str(evaluation_result_path), f"evaluation_{model_config_id}_{built_in_dataset_id}.json")
-        
+        with open(evaluation_result_file, 'w') as out_f:
+            json.dump(evaluation_result, out_f, ensure_ascii=False)
     # 处理自定义数据集
     for dataset_config_id in dataset_config_ids:
         tmp_prediction_result_path = os.path.join(str(tmp_output_path), subdir, "predictions", str(model_config_id), f"{dataset_config_id}.json")
