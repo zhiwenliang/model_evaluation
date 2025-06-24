@@ -5,7 +5,17 @@ import shutil
 import re
 import logging
 
-agieval_datasets = ['agieval-logiqa-en', 'agieval-jec-qa-ca', 'agieval-lsat-rc', 'agieval-math', 'agieval-sat-math', 'agieval-gaokao-mathqa', 'agieval-aqua-rat', 'agieval-lsat-ar', 'agieval-gaokao-biology', 'agieval-gaokao-physics', 'agieval-gaokao-mathcloze', 'agieval-jec-qa-kd', 'agieval-logiqa-zh', 'agieval-gaokao-history', 'agieval-sat-en-without-passage', 'agieval-gaokao-english', 'agieval-sat-en', 'agieval-gaokao-chemistry', 'agieval-gaokao-geography', 'agieval-gaokao-chinese', 'agieval-lsat-lr']
+agieval_datasets = ['agieval-gaokao-english', 'agieval-lsat-lr', 'agieval-gaokao-biology', 'agieval-gaokao-mathcloze', 'agieval-gaokao-physics', 'agieval-aqua-rat', 'agieval-sat-math', 'agieval-lsat-rc', 'agieval-sat-en', 'agieval-jec-qa-kd', 'agieval-gaokao-mathqa', 'agieval-gaokao-history', 'agieval-math', 'agieval-jec-qa-ca', 'agieval-gaokao-geography', 'agieval-gaokao-chemistry', 'agieval-lsat-ar', 'agieval-sat-en-without-passage', 'agieval-logiqa-en', 'agieval-gaokao-chinese', 'agieval-logiqa-zh']
+gaokao_bench_datasets = ['2010-2022_Math_I_MCQs', '2010-2022_Chinese_Language_Literary_Text_Reading', '2010-2022_Chinese_Modern_Lit', '2014-2022_English_Language_Cloze_Passage', '2010-2022_Chinese_Language_Ancient_Poetry_Reading', '2010-2022_Chemistry_MCQs', '2010-2022_Math_II_MCQs', '2010-2022_Chemistry_Open-ended_Questions', '2010-2013_English_MCQs', '2010-2022_History_MCQs', '2010-2022_Chinese_Language_Classical_Chinese_Reading', '2010-2022_Political_Science_MCQs', '2010-2022_Math_I_Fill-in-the-Blank', '2010-2022_Math_II_Open-ended_Questions', '2010-2022_Political_Science_Open-ended_Questions', '2010-2022_Math_II_Fill-in-the-Blank', '2010-2022_Geography_Open-ended_Questions', '2010-2022_Math_I_Open-ended_Questions', '2010-2022_Biology_Open-ended_Questions', '2010-2022_Physics_MCQs', '2010-2022_Chinese_Language_Language_and_Writing_Skills_Open-ended_Questions', '2010-2022_Geography_MCQs', '2010-2022_Biology_MCQs', '2010-2022_English_Reading_Comp', '2010-2022_Physics_Open-ended_Questions', '2010-2022_History_Open-ended_Questions', '2010-2022_Chinese_Lang_and_Usage_MCQs', '2010-2022_Chinese_Language_Practical_Text_Reading', '2010-2022_Chinese_Language_Famous_Passages_and_Sentences_Dictation', '2010-2022_English_Fill_in_Blanks', '2012-2022_English_Cloze_Test', '2012-2022_English_Language_Error_Correction']
+boolq_datasets = ['BoolQ']
+winogrande_datasets = ['winogrande']
+drop_datasets = ['drop']
+gpqa_datasets = ['GPQA_diamond']
+teval_datasets = ['teval-plan_json_v1', 'teval-instruct_v1', 'teval-reason_retrieve_understand_json_v1', 'teval-review_str_v1', 'teval-retrieve_str_v1', 'teval-plan_str_v1', 'teval-reason_str_v1', 'teval-understand_str_v1']
+race_datasets = ['race-middle', 'race-high']
+humaneval_datasets = ['openai_humaneval']
+ifeval_datasets = ['IFEval']
+
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -58,9 +68,26 @@ for model_config_id in model_config_ids:
             # loop all json file in tmp_evaluation_result_path
             for file in os.listdir(tmp_evaluation_result_path):
                 if file.endswith(".json"):
-                    with open(os.path.join(tmp_evaluation_result_path, file), 'r') as f:
-                        tmp_result = json.load(f)
-                        evaluation_result[file.split(".")[0]] = tmp_result
+                    file_name = file.split(".")[0]
+                    # Create a mapping of dataset names to their corresponding dataset lists
+                    dataset_mapping = {
+                        "AGIEval": agieval_datasets,
+                        "GaokaoBench": gaokao_bench_datasets,
+                        "BoolQ": boolq_datasets,
+                        "WinoGrande": winogrande_datasets,
+                        "DROP": drop_datasets,
+                        "GPQA": gpqa_datasets,
+                        "T-Eval": teval_datasets,
+                        "RACE": race_datasets,
+                        "HumanEval": humaneval_datasets,
+                        "IFEval": ifeval_datasets
+                    }
+                    
+                    # Check if the built-in dataset name exists in mapping and file_name is in corresponding dataset list
+                    if built_in_dataset_name in dataset_mapping and file_name in dataset_mapping[built_in_dataset_name]:
+                        with open(os.path.join(tmp_evaluation_result_path, file), 'r') as f:
+                            tmp_result = json.load(f)
+                            evaluation_result[file_name] = tmp_result
         else:
             logger.error("Evaluation result is not exist for %s", built_in_dataset_name)        
         # save evaluation result
