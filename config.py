@@ -59,14 +59,12 @@ model_configs = getenv("MODEL_CONFIGS")
 judge_mode = getenv("JUDGE_MODE")
 prompt = getenv("PROMPT", "")
 prompt_mode = getenv("PROMPT_MODE")
-concurrency = getenv("CONCURRENCY", 1)
 print("operation_type: ", operation_type)
 print("dataset_configs: ", dataset_configs)
 print("model_configs: ", model_configs)
 print("judge_mode: ", judge_mode)
 print("prompt: ", prompt)
 print("prompt_mode: ", prompt_mode)
-print("concurrency: ", concurrency)
 
 output_column = "target" if operation_type in ["EVALUATION", "INFERENCE"] else ""
 custom_reader_cfg = dict(
@@ -211,6 +209,7 @@ if model_configs:
             # API_TYPE,API_URL,API_KEY,API_EXTRA_CONFIG
             model_config_id = model_config.get("MODEL_CONFIG_ID")
             model_type = model_config.get("MODEL_TYPE")
+            concurrency = model_config.get("CONCURRENCY", 1)
             if model_config.get("TEMPERATURE"):
                 temperature = float(model_config.get("TEMPERATURE"))
             else:
