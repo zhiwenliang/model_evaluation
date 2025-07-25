@@ -4,17 +4,17 @@
 
 暴露的参数，通过容器配置环境变量传入
 
-| 参数 | 必传 | 说明 |
-|------|------|------|
-| OPERATION_TYPE | 是 | 操作类型<br>- 推理模式（INFERENCE）<br>- 评估模式（EVALUATION）<br>- 裁判模式（JUDGE） |
-| INFERENCE_RESULT | 是 | 推理结果路径，文件夹，多模型采用 inference_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.jsonl 文件名输出 |
-| EVALUATION_RESULT | 是 | 评估结果路径，文件夹，多模型采用 evaluation_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.json 文件名输出 |
-| DATASET_CONFIGS | 是 | 支持传入多个数据集，使用 json 数组字符串形式，数组中 json 对象参考下方单个数据集配置设置 |
-| MODEL_CONFIGS | 是 | 支持传入多模型配置，使用 json 数组字符串形式，数组中 json 对象参考下方单个模型配置设置 |
-| JUDGE_MODE | 否 | 裁判模式<br>- 打分模式（SINGLE）<br>- 对比模式（MULTIPLE） |
-| INFERENCE_MODE | 否 | 推理模式<br>- 覆盖原答案（OVERWRITE）<br>- 不覆盖原答案（NOT_OVERWRITE） |
-| PROMPT | 否 | 提示词 |
-| PROMPT_MODE | 否 | 配合 PROMPT 参数使用，不同模式组装出的提示词不同，参数值如下<br>- System 角色注入模式(SYSTEM_PROMPT)：使用 system 角色传入 prompt<br>- 双 Human 轮次模式(DUAL_HUMAN)：通过两次 human 角色提问来传入 prompt<br>- Prompt 合并输入模式(PROMPT_MERGE)：通过替换 prompt 中 `{{}}` 关键字为 `\n[{用户问题}]\n` |
+| 参数              | 必传 | 说明                                                                                                                                                                                                                                                                                                     |
+| ----------------- | ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OPERATION_TYPE    | 是   | 操作类型<br>- 推理模式（INFERENCE）<br>- 评估模式（EVALUATION）<br>- 裁判模式（JUDGE）                                                                                                                                                                                                                   |
+| INFERENCE_RESULT  | 是   | 推理结果路径，文件夹，多模型采用 inference_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.jsonl 文件名输出                                                                                                                                                                                                        |
+| EVALUATION_RESULT | 是   | 评估结果路径，文件夹，多模型采用 evaluation_{MODEL_CONFIG_ID}_{DATASET_CONFIG_ID}.json 文件名输出                                                                                                                                                                                                        |
+| DATASET_CONFIGS   | 是   | 支持传入多个数据集，使用 json 数组字符串形式，数组中 json 对象参考下方单个数据集配置设置                                                                                                                                                                                                                 |
+| MODEL_CONFIGS     | 是   | 支持传入多模型配置，使用 json 数组字符串形式，数组中 json 对象参考下方单个模型配置设置                                                                                                                                                                                                                   |
+| JUDGE_MODE        | 否   | 裁判模式<br>- 打分模式（SINGLE）<br>- 对比模式（MULTIPLE）                                                                                                                                                                                                                                               |
+| INFERENCE_MODE    | 否   | 推理模式<br>- 覆盖原答案（OVERWRITE）<br>- 不覆盖原答案（NOT_OVERWRITE）                                                                                                                                                                                                                                 |
+| PROMPT            | 否   | 提示词                                                                                                                                                                                                                                                                                                   |
+| PROMPT_MODE       | 否   | 配合 PROMPT 参数使用，不同模式组装出的提示词不同，参数值如下<br>- System 角色注入模式(SYSTEM_PROMPT)：使用 system 角色传入 prompt<br>- 双 Human 轮次模式(DUAL_HUMAN)：通过两次 human 角色提问来传入 prompt<br>- Prompt 合并输入模式(PROMPT_MERGE)：通过替换 prompt 中 `{{}}` 关键字为 `\n[{用户问题}]\n` |
 
 **PROMPT_MODE 参数说明：**
 ```json
@@ -28,24 +28,24 @@
 
 ### 数据集配置（DATASET_CONFIGS）
 
-| 参数 | 必传 | 说明 |
-|------|------|------|
-| DATASET_CONFIG_ID | 是 | 数据集配置id，唯一即可 |
-| DATASET_TYPE | 是 | 数据集配置类型，支持用户自定义数据集和内置数据集<br>- BUILT_IN：内置数据集<br>- CUSTOM：用户自定义数据集 |
-| EVALUATION_METRICS | 否 | 评估指标，多个指标使用 "," 分隔开，不传时使用通用的默认指标进行评估<br>- 通用指标：BLEU-4,rouge1,rouge2,rougeL,rougeLsum<br>- 其他指标 |
+| 参数               | 必传 | 说明                                                                                                                                   |
+| ------------------ | ---- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| DATASET_CONFIG_ID  | 是   | 数据集配置id，唯一即可                                                                                                                 |
+| DATASET_TYPE       | 是   | 数据集配置类型，支持用户自定义数据集和内置数据集<br>- BUILT_IN：内置数据集<br>- CUSTOM：用户自定义数据集                               |
+| EVALUATION_METRICS | 否   | 评估指标，多个指标使用 "," 分隔开，不传时使用通用的默认指标进行评估<br>- 通用指标：BLEU-4,rouge1,rouge2,rougeL,rougeLsum<br>- 其他指标 |
 
 #### 数据集配置类型 - 内置数据集配置（BUILT_IN）
 **注意**： 由于每种内置数据集都可能包含多个子数据集，输出推理结果难以和配置一一对应，所以不支持推理模式，不保存推理结果，在评估模式中也仅输出评估结果
 
-| 参数 | 必传 | 说明 |
-|------|------|------|
-| BUILT_IN_DATASET | 是 | 内置数据集名称，部分指标和数据集存在特定的 n-n 关系，请注意区分，内置数据集评估指标目前固定，暂不支持自定义 |
+| 参数             | 必传 | 说明                                                                                                        |
+| ---------------- | ---- | ----------------------------------------------------------------------------------------------------------- |
+| BUILT_IN_DATASET | 是   | 内置数据集名称，部分指标和数据集存在特定的 n-n 关系，请注意区分，内置数据集评估指标目前固定，暂不支持自定义 |
 
 #### 数据集配置类型 - 自定义数据集配置（CUSTOM）
 
-| 参数 | 必传 | 说明 |
-|------|------|------|
-| CUSTOM_DATASET_PATH | 是 | 自定义数据集路径<br>- 支持文件夹和jsonl文件，多个路径使用 "," 分隔<br>- 文件夹内需包含数据集对应的jsonl文件<br>- jsonl文件内容请使用平台数据集标准格式<br>- **注意**：多路径进行评估时会先合并成一个jsonl文件 |
+| 参数                | 必传 | 说明                                                                                                                                                                                                          |
+| ------------------- | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CUSTOM_DATASET_PATH | 是   | 自定义数据集路径<br>- 支持文件夹和jsonl文件，多个路径使用 "," 分隔<br>- 文件夹内需包含数据集对应的jsonl文件<br>- jsonl文件内容请使用平台数据集标准格式<br>- **注意**：多路径进行评估时会先合并成一个jsonl文件 |
 
 
 #### 示例
@@ -64,23 +64,25 @@
 
 ### MODEL_CONFIGS
 
-| 参数 | 必传 | 说明 |
-|------|------|------|
-| MODEL_CONFIG_ID | 是 | 模型配置ID，唯一即可 |
-| MODEL_TYPE | 是 | 模型配置类型<br>- API: 推理服务API，仅提供API，兼容 OPENAI 规范推理接口<br>- BUILT_IN: 内置模型，根据内置配置决定模型加载和使用方式<br>- CUSTOM: 自定义模型 |
-| TEMPERATURE | 否 | 控制采样温度（0 表示贪婪解码），默认0 |
-| TOP_P | 否 | 控制要考虑的排名靠前的 token 的累积概率的浮点数。必须在(0, 1]之间。设置为 1 表示考虑所有 token。，默认1 |
-| PRESENCE_PENALTY | 否 | 对已经出现过的 token 增加/减少其再次出现的概率，默认0 |
+| 参数             | 必传 | 说明                                                                                                                                                        |
+| ---------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| MODEL_CONFIG_ID  | 是   | 模型配置ID，唯一即可                                                                                                                                        |
+| MODEL_TYPE       | 是   | 模型配置类型<br>- API: 推理服务API，仅提供API，兼容 OPENAI 规范推理接口<br>- BUILT_IN: 内置模型，根据内置配置决定模型加载和使用方式<br>- CUSTOM: 自定义模型 |
+| TEMPERATURE      | 否   | 控制采样温度（0 表示贪婪解码），默认0                                                                                                                       |
+| TOP_P            | 否   | 控制要考虑的排名靠前的 token 的累积概率的浮点数。必须在(0, 1]之间。设置为 1 表示考虑所有 token。，默认1                                                     |
+| PRESENCE_PENALTY | 否   | 对已经出现过的 token 增加/减少其再次出现的概率，默认0                                                                                                       |
+| CONCURRENCY      | 否   | 并发请求数量，默认1                                                                                                                                         |
+
 
 #### 模型配置类型 - API
 
-| 参数 | 必传 | 说明 |
-|------|------|------|
-| API_TYPE | 是 | API类型，用来区分请求和返回数据格式<br>- OpenAI: OpenAI 格式<br>- Spark: 星火API 格式 |
-| API_URL | 是 | API地址 |
-| API_KEY | 是 | API的key |
-| API_MODEL | 否 | API的model，有些api需要设置，不设置默认使用MODEL_CONFIG_ID |
-| API_EXTRA_CONFIG | 否 | 其他配置，json字符串形式 |
+| 参数             | 必传 | 说明                                                                                  |
+| ---------------- | ---- | ------------------------------------------------------------------------------------- |
+| API_TYPE         | 是   | API类型，用来区分请求和返回数据格式<br>- OpenAI: OpenAI 格式<br>- Spark: 星火API 格式 |
+| API_URL          | 是   | API地址                                                                               |
+| API_KEY          | 是   | API的key                                                                              |
+| API_MODEL        | 否   | API的model，有些api需要设置，不设置默认使用MODEL_CONFIG_ID                            |
+| API_EXTRA_CONFIG | 否   | 其他配置，json字符串形式                                                              |
 ```json
 // 讯飞公有云协议相关参数参考
 {
@@ -93,18 +95,18 @@
 
 #### 模型配置类型 - CUSTOM
 
-| 参数 | 必传 | 说明 |
-|------|------|------|
-| CUSTOM_MODEL_NAME | 否 | 自定义模型名称 |
-| BASE_MODEL_PATH | 是 | 基础模型路径 |
-| LORA_WEIGHT_PATH | 否 | LoRA权重路径，有的话就会加载，否则不加载 |
-| NUMS_GPUS | 是 | 占卡数量 |
+| 参数              | 必传 | 说明                                     |
+| ----------------- | ---- | ---------------------------------------- |
+| CUSTOM_MODEL_NAME | 否   | 自定义模型名称                           |
+| BASE_MODEL_PATH   | 是   | 基础模型路径                             |
+| LORA_WEIGHT_PATH  | 否   | LoRA权重路径，有的话就会加载，否则不加载 |
+| NUMS_GPUS         | 是   | 占卡数量                                 |
 
 #### 模型配置类型 - BUILT_IN
 
-| 参数 | 必传 | 说明 |
-|------|------|------|
-| BUILD_IN_MODEL_NAME | 是 | 内置模型名称 |
+| 参数                | 必传 | 说明         |
+| ------------------- | ---- | ------------ |
+| BUILD_IN_MODEL_NAME | 是   | 内置模型名称 |
 
 #### 示例
 
@@ -130,7 +132,7 @@
     "CUSTOM_MODEL_NAME": "",
     "BASE_MODEL_PATH": "/iflytek/base_model",
     "LORA_WEIGHT_PATH": "",
-    "NUMS_GPUS": 1
+    "NUMS_GPUS": 1,
   }
 ]
 ```
