@@ -59,12 +59,14 @@ model_configs = getenv("MODEL_CONFIGS")
 judge_mode = getenv("JUDGE_MODE")
 prompt = getenv("PROMPT", "")
 prompt_mode = getenv("PROMPT_MODE")
+concurrency = getenv("CONCURRENCY", 1)
 print("operation_type: ", operation_type)
 print("dataset_configs: ", dataset_configs)
 print("model_configs: ", model_configs)
 print("judge_mode: ", judge_mode)
 print("prompt: ", prompt)
 print("prompt_mode: ", prompt_mode)
+print("concurrency: ", concurrency)
 
 output_column = "target" if operation_type in ["EVALUATION", "INFERENCE"] else ""
 custom_reader_cfg = dict(
@@ -276,7 +278,7 @@ if model_configs:
                             meta_template=api_meta_template,
                             query_per_second=1,
                             max_out_len=2048,
-                            batch_size=2,
+                            batch_size=concurrency,
                         )
                     ]
                 elif api_type == "Spark":
@@ -302,7 +304,7 @@ if model_configs:
                             meta_template=api_meta_template,
                             query_per_second=1,
                             max_out_len=2048,
-                            batch_size=24,
+                            batch_size=concurrency,
                         )
                     ]
                 else:
@@ -320,7 +322,7 @@ if model_configs:
                         path=base_model_path,
                         lora_path=lora_weight_path,
                         model_kwargs=dict(tensor_parallel_size=nums_gpus),
-                        batch_size=1,
+                        batch_size=concurrency,
                         generation_kwargs=dict(
                             temperature=temperature,
                             top_p=top_p,
